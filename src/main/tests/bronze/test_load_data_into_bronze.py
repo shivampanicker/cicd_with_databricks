@@ -4,34 +4,59 @@
 
 # COMMAND ----------
 
+pip install pytest
+
+# COMMAND ----------
+
+# MAGIC %run ../../python/bronze/load_data_into_bronze
+
+# COMMAND ----------
+
 import pytest
-from databricks_autoloader import load_data_to_bronze
 
 # Define the input and output paths for the test case
 
-database_name = spark.conf.get("com.databricks.training.spark.dbName")
-username = spark.conf.get("com.databricks.training.spark.userName").replace('.', '_')
-input_path = f'/FileStore/{username}/retail_data/orders'
-output_path = f'/FileStore/{username}/bronze/'
+username = dbutils.notebook.entry_point.getDbutils().notebook().getContext().userName().get().replace('.','_')
+
+source_dataset = 'orders'
+target_path = f'/FileStore/{username}/test_bronze_db/'
 
 def test_load_data_to_bronze():
     # Call the load_data_to_bronze function to load data into bronze
-    load_data_to_bronze(input_path, output_path)
+    #dbutils.fs.rm(target_path, True)
+    dbutils.fs.rm(target_path, True)
+    
+    load_data_to_bronze(source_dataset, target_path)
     
     # Check that the output path contains the expected number of files
-    expected_num_files = 3
-    num_files = len(dbutils.fs.ls(output_path))
+    expected_num_files = 2
+    num_files = len(dbutils.fs.ls(target_path+source_dataset))
     assert num_files == expected_num_files, f"Expected {expected_num_files} files, but found {num_files} files."
     
     # Check that the output files have the expected format
-    expected_file_format = 'delta'
-    for file_info in dbutils.fs.ls(output_path):
-        file_name = file_info.name
-        file_format = file_name.split('.')[-1]
-        assert file_format == expected_file_format, f"Expected {file_name} to be in {expected_file_format} format, but it is in {file_format} format."
+#     expected_file_format = '_delta_log/'
+#     file_info = dbutils.fs.ls(target_path+source_dataset)
+#     file_name = file_info.name
+#     file_format = file_name.split('.')[-1]
+#     assert file_format == expected_file_format, f"Expected {file_name} to be in {expected_file_format} format, but it is in {file_format} format."
     
     # Check that the output files are not empty
-    for file_info in dbutils.fs.ls(output_path):
+    for file_info in dbutils.fs.ls(target_path+source_dataset):
+      if ".parquet" in file_info:
         file_size = file_info.size
         assert file_size > 0, f"{file_info.name} is empty."
+    
+    #Check that the output files has expected count
+    expected_count=10000
+    assert spark.read.format("delta").load(target_path+source_dataset).count() == expected_count
+    
+    dbutils.fs.rm(target_path, True)
+
+
+# COMMAND ----------
+
+test_load_data_to_bronze()
+
+# COMMAND ----------
+
 

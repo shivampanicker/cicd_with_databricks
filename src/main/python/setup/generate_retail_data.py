@@ -1,4 +1,8 @@
 # Databricks notebook source
+pip install pytest
+
+# COMMAND ----------
+
 from pyspark.sql.functions import rand, randn
 from pyspark.sql.types import StringType, IntegerType, StructType, StructField
 
@@ -70,7 +74,7 @@ customers_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(ou
 # COMMAND ----------
 
 # MAGIC %fs
-# MAGIC ls /FileStore/shivam_panicker@databricks_com/
+# MAGIC ls /FileStore/shivam_panicker@databricks_com/retail_dataset/orders
 
 # COMMAND ----------
 
