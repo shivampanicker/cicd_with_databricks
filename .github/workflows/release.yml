@@ -3,8 +3,6 @@ on: push
 
 jobs:
   unit-tests:
-    needs:
-      - linting
     runs-on: ubuntu-latest
 
     steps:
