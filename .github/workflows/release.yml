@@ -13,4 +13,9 @@ jobs:
          local-notebook-path: /Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/tests/bronze/test_load_data_into_bronze.py
          databricks-host: ${{ secrets.DATABRICKS_HOST_PRD }}
          databricks-token: ${{ secrets.DATABRICKS_TOKEN_PRD }}
-     - existing_cluster_id: 0220-081432-d724g8po
+         new-cluster-json: >
+           {
+             "num_workers": 1,
+             "spark_version": "11.3.x-scala2.12",
+             "node_type_id": "i3.xlarge"
+           }
