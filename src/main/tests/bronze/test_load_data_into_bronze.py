@@ -4,8 +4,11 @@
 
 # COMMAND ----------
 
-import pytest
 pip install pytest
+
+# COMMAND ----------
+
+import pytest
 
 # COMMAND ----------
 
