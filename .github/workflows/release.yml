@@ -11,8 +11,8 @@ jobs:
        uses: databricks/run-notebook@v0
        with:
          local-notebook-path: ../../src/main/tests/bronze/test_load_data_into_bronze.py
-         databricks-host: ${{ secrets.DATABRICKS_HOST_PRD }}
-         databricks-token: ${{ secrets.DATABRICKS_TOKEN_PRD }}
+         databricks-host: ${{secrets.DATABRICKS_HOST_PRD}}
+         databricks-token: ${{secrets.DATABRICKS_TOKEN_PRD}}
          new-cluster-json: >
            {
              "num_workers": 1,
