@@ -4,6 +4,12 @@ on: push
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
+    env:
+      DATABRICKS_HOST: ${{ secrets['DATABRICKS_HOST_PRD'] }}
+      DATABRICKS_TOKEN: ${{ secrets['DATABRICKS_TOKEN_PRD'] }}
+      ENV: prod
+      INTEGRATION_TEST: "NO"
+      REPO_PATH: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks"
 
     steps:
       - uses: actions/checkout@v2
@@ -16,4 +22,4 @@ jobs:
       
       - name: Running Unit Tests
         run: |
-          python -m unittest src/main/tests/
+          python -m unittest tests/bronze/*.py
