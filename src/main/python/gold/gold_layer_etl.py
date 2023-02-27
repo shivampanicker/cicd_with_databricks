@@ -1,4 +1,5 @@
 # Databricks notebook source
+from pyspark.sql.functions import sum, avg, min, max, count, date_format, year, month
 from pyspark.sql.functions import year, quarter, month, sum, avg
 
 # Read in the necessary tables
@@ -21,32 +22,33 @@ summary = joined.select(year("date").alias("year"),
                         "customer_country")
 
 # Write the table to the gold layer
-summary.write.mode("overwrite").format("delta").saveAsTable("gold.sales_summary")
+summary.write.mode("overwrite").format(
+    "delta").saveAsTable("gold.sales_summary")
 
 
 # COMMAND ----------
 
-from pyspark.sql.functions import sum, avg, min, max, count, date_format, year, month
 
 # Read data from silver layer
 silverDF = spark.read.format("delta").load("/mnt/bronze/retail")
 
 # Perform complex aggregations on silver layer data
 goldDF = (silverDF
-  .groupBy("Country", "Year", "Month")
-  .agg(
-    sum("Revenue").alias("TotalRevenue"),
-    avg("Revenue").alias("AvgRevenue"),
-    min("Revenue").alias("MinRevenue"),
-    max("Revenue").alias("MaxRevenue"),
-    count("OrderID").alias("TotalOrders"),
-    countDistinct("CustomerID").alias("TotalCustomers"),
-    sum(when(col("Revenue") > 100, col("Revenue")).otherwise(0)).alias("RevenueAbove100"),
-    date_format("OrderDate", "E").alias("DayOfWeek"),
-    year("OrderDate").alias("Year"),
-    month("OrderDate").alias("Month")
-  )
-)
+          .groupBy("Country", "Year", "Month")
+          .agg(
+              sum("Revenue").alias("TotalRevenue"),
+              avg("Revenue").alias("AvgRevenue"),
+              min("Revenue").alias("MinRevenue"),
+              max("Revenue").alias("MaxRevenue"),
+              count("OrderID").alias("TotalOrders"),
+              countDistinct("CustomerID").alias("TotalCustomers"),
+              sum(when(col("Revenue") > 100, col("Revenue")
+                       ).otherwise(0)).alias("RevenueAbove100"),
+              date_format("OrderDate", "E").alias("DayOfWeek"),
+              year("OrderDate").alias("Year"),
+              month("OrderDate").alias("Month")
+          )
+          )
 
 # Write data to gold layer
 goldDF.write.format("delta").mode("overwrite").save("/mnt/gold/retail")

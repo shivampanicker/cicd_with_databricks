@@ -8,7 +8,7 @@
 # COMMAND ----------
 
 # Call the load_data_to_bronze function
-dataset = dbutils.widgets.text("source_dataset","")
+dataset = dbutils.widgets.text("source_dataset", "")
 
 dataset = dbutils.widgets.get("source_dataset")
 
@@ -23,5 +23,3 @@ load_data_to_bronze(dataset, target_path)
 # MAGIC ls /FileStore/shivam_panicker@databricks_com/retail_dataset/customers
 
 # COMMAND ----------
-
-

@@ -1,32 +1,33 @@
 # Databricks notebook source
-username = dbutils.notebook.entry_point.getDbutils().notebook().getContext().userName().get().replace('.','_')
+username = dbutils.notebook.entry_point.getDbutils(
+).notebook().getContext().userName().get().replace('.', '_')
 user = username[:username.index("@")]
 
 # COMMAND ----------
 
 spark.sql(
-  f"""CREATE DATABASE IF NOT EXISTS {user}_bronze_db
+    f"""CREATE DATABASE IF NOT EXISTS {user}_bronze_db
   LOCATION '/FileStore/{username}_bronze_db/'
 """)
 
 # COMMAND ----------
 
 spark.sql(
-  f"""CREATE DATABASE IF NOT EXISTS {user}_silver_db
+    f"""CREATE DATABASE IF NOT EXISTS {user}_silver_db
   LOCATION '/FileStore/{username}_silver_db/'
 """)
 
 # COMMAND ----------
 
 spark.sql(
-  f"""CREATE DATABASE IF NOT EXISTS {user}_gold_db
+    f"""CREATE DATABASE IF NOT EXISTS {user}_gold_db
   LOCATION '/FileStore/{username}_gold_db/'
 """)
 
 # COMMAND ----------
 
 spark.sql(
-  f"""CREATE TABLE IF NOT EXISTS {user}_bronze_db.bronze_orders
+    f"""CREATE TABLE IF NOT EXISTS {user}_bronze_db.bronze_orders
   (
   order_id STRING,
   customer_id STRING,
@@ -39,7 +40,7 @@ spark.sql(
 # COMMAND ----------
 
 spark.sql(
-  f"""CREATE TABLE IF NOT EXISTS {user}_bronze_db.bronze_sales
+    f"""CREATE TABLE IF NOT EXISTS {user}_bronze_db.bronze_sales
   (
   sale_id STRING,
   product_id STRING,
@@ -54,7 +55,7 @@ spark.sql(
 # COMMAND ----------
 
 spark.sql(
-  f"""CREATE TABLE IF NOT EXISTS {user}_bronze_db.bronze_products
+    f"""CREATE TABLE IF NOT EXISTS {user}_bronze_db.bronze_products
   (
   product_id STRING,
   product_category STRING,
@@ -66,7 +67,7 @@ spark.sql(
 # COMMAND ----------
 
 spark.sql(
-  f"""CREATE TABLE IF NOT EXISTS {user}_bronze_db.bronze_customers
+    f"""CREATE TABLE IF NOT EXISTS {user}_bronze_db.bronze_customers
   (
   customer_id STRING,
   customer_name STRING,
@@ -82,7 +83,7 @@ spark.sql(
 # COMMAND ----------
 
 spark.sql(
-  f"""CREATE TABLE IF NOT EXISTS {user}_silver_db.silver_orders
+    f"""CREATE TABLE IF NOT EXISTS {user}_silver_db.silver_orders
   (
   order_id STRING,
   customer_id INT,
@@ -94,7 +95,7 @@ spark.sql(
 # COMMAND ----------
 
 spark.sql(
-  f"""CREATE TABLE IF NOT EXISTS {user}_silver_db.silver_sales
+    f"""CREATE TABLE IF NOT EXISTS {user}_silver_db.silver_sales
   (
   sale_id STRING,
   product_id INT,
@@ -108,7 +109,7 @@ spark.sql(
 # COMMAND ----------
 
 spark.sql(
-  f"""CREATE TABLE IF NOT EXISTS {user}_silver_db.silver_products
+    f"""CREATE TABLE IF NOT EXISTS {user}_silver_db.silver_products
   (
   product_id INT,
   product_category STRING,
@@ -119,7 +120,7 @@ spark.sql(
 # COMMAND ----------
 
 spark.sql(
-  f"""CREATE TABLE IF NOT EXISTS {user}_silver_db.silver_customers
+    f"""CREATE TABLE IF NOT EXISTS {user}_silver_db.silver_customers
   (
   customer_id INT,
   customer_name STRING,
@@ -134,5 +135,5 @@ spark.sql(
 # COMMAND ----------
 
 spark.sql(
-  f"""CREATE TABLE IF NOT EXISTS {user}_gold_db.gold_agg
+    f"""CREATE TABLE IF NOT EXISTS {user}_gold_db.gold_agg
 """)
