@@ -86,7 +86,7 @@ spark.sql(
   (
   order_id STRING,
   customer_id INT,
-  order_date DATE,
+  order_date TIMESTAMP,
   order_status STRING
   )
 """)

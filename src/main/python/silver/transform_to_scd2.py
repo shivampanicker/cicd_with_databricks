@@ -20,10 +20,14 @@ end_date = to_date(lit("9999-12-31"))
 # Define the columns to include in the dimension table
 dim_cols = ['customer_id', 'customer_name', 'state', 'company', 'phone_number', 'start_date', 'end_date']
 
-def transform_to_scd2(customer_data):
+def transform_to_scd2(customer_data, mode: str):
   # Generate SCD Type 2 table
   
-  silver_customers = DeltaTable.forName(spark, user+'_silver_db.silver_customers')
+  if mode == "test":
+    spark.sql(f"create table {user}_silver_db.silver_customers_test as select * from {user}_silver_db.silver_customers where customer_id=000000")
+    silver_customers = DeltaTable.forName(spark, user+'_silver_db.silver_customers_test')
+  else:
+    silver_customers = DeltaTable.forName(spark, user+'_silver_db.silver_customers')
   effective_date = lit(current_date())
   scd2_data = customer_data.select(
       "customer_id",
@@ -46,42 +50,4 @@ def transform_to_scd2(customer_data):
       "predicate": merge_condition
   }
 
-  silver_customers.alias("scd2").merge(scd2_data.alias("source"),"scd2.customer_id = source.customer_id").whenMatchedUpdate(set={"end_date": date_sub(current_date(), 1)}).whenNotMatchedInsert(values={ "customer_id": col("source.customer_id"),"customer_name": col("source.customer_name"),"state": col("source.state"), "company": col("source.company"), "phone_number": col("source.phone_number"),"start_date": col("source.start_date"), "end_date": col("source.end_date")}).execute()
-
-# COMMAND ----------
-
-source_dataset_df = spark.read.format("delta").load(input_path+dbutils.widgets.get("source_dataset"))
-transform_to_scd2(source_dataset_df)
-
-# COMMAND ----------
-
-# MAGIC %run ../setup/generate_retail_data
-
-# COMMAND ----------
-
-generate_customer_data_day_2()
-
-# COMMAND ----------
-
-# MAGIC %run ../bronze/load_data_into_bronze
-
-# COMMAND ----------
-
-# Set the target location for the delta table
-target_path = f"/FileStore/{username}_bronze_db/"
-
-load_data_to_bronze(dbutils.widgets.get("source_dataset"), target_path)
-
-# COMMAND ----------
-
-source_dataset_df = spark.read.format("delta").option("readChangeFeed", "true") \
-  .option("startingVersion", 1) \
-  .option("endingVersion", 2) \
-  .load(input_path+"bronze_"+dbutils.widgets.get("source_dataset"))
-
-transform_to_scd2(source_dataset_df)
-
-# COMMAND ----------
-
-# MAGIC %sql
-# MAGIC select * from shivam_panicker_silver_db.silver_customers where customer_id = 8999;
+  customer_dim_df = silver_customers.alias("scd2").merge(scd2_data.alias("source"),"scd2.customer_id = source.customer_id").whenMatchedUpdate(set={"end_date": date_sub(current_date(), 1)}).whenNotMatchedInsert(values={ "customer_id": col("source.customer_id"),"customer_name": col("source.customer_name"),"state": col("source.state"), "company": col("source.company"), "phone_number": col("source.phone_number"),"start_date": col("source.start_date"), "end_date": col("source.end_date")}).execute()

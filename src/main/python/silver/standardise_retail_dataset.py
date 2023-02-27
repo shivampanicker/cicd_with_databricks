@@ -6,29 +6,25 @@
 
 username = dbutils.notebook.entry_point.getDbutils().notebook().getContext().userName().get().replace('.','_')
 user = username[:username.index("@")]
-input_db = f'{user}_bronze_db'
 output_db = f'{user}_silver_db'
 
 # COMMAND ----------
 
-from pyspark.sql.functions import to_date, col, lit, round, when
+from pyspark.sql.functions import to_date, col, lit, round, when, substring
 from pyspark.sql.types import IntegerType
-# Read the order and sales data from bronze layer
-orders_bronze_df = spark.read.table(input_db+".bronze_orders")
-sales_bronze_df = spark.read.table(input_db+".bronze_sales")
 
 
-def transform_to_silver_1(orders_silver_df):
+def transform_to_silver_1(orders_bronze_df):
   # Apply standardizations to order data
-  orders_silver_df = orders_bronze_df.withColumn("order_date", to_date(col("order_date"), "dd/MM/yyyy")) \
-                                     .withColumn("order_status", when(col("order_status") == "SHIPPED", "COMPLETED").otherwise(col("order_status"))) \
+  orders_silver_df = orders_bronze_df.withColumn("order_date", col("order_date").cast("Timestamp")) \
+                                     .withColumn("order_status", when(col("order_status") == "shipped", "completed").otherwise(col("order_status"))) \
                                      .withColumn("customer_id", col("customer_id").cast("Integer")) \
                                      .select("order_id", "order_date", "customer_id", "order_status")
   return orders_silver_df
 
 def transform_to_silver_2(sales_bronze_df):
   # Apply standardizations to sales data
-  sales_silver_df = sales_bronze_df.withColumn("sale_date", to_date(col("sale_date"), "dd/MM/yyyy")) \
+  sales_silver_df = sales_bronze_df.withColumn("sale_date", to_date(col("order_date").cast("Timestamp"))) \
                                    .withColumn("sale_amount", round(col("sale_amount").cast("Double") * 0.9, 2)) \
                                    .withColumn("currency", lit("USD")) \
                                    .withColumn("product_id", col("product_id").cast("Integer")) \
@@ -37,29 +33,12 @@ def transform_to_silver_2(sales_bronze_df):
 
 # COMMAND ----------
 
-orders_silver_df = transform_to_silver_1(orders_bronze_df)
-sales_silver_df = transform_to_silver_2(sales_bronze_df)
-
-# COMMAND ----------
-
-# Write the standardized data into the silver layer
-orders_silver_df.write.format("delta").mode("append").saveAsTable(output_db+".silver_orders")
-sales_silver_df.write.format("delta").mode("append").saveAsTable(output_db+".silver_sales")
-
-# COMMAND ----------
-
-def standardize_product_data(df):
+def standardize_product_data(df, mode: str):
     from pyspark.sql.functions import coalesce, col, upper
     
     # Replace null values in "product_category" column with "Unknown"
     df = df.withColumn("product_id", col("product_id").cast("Integer")).withColumn("product_start_date", col("product_start_date").cast("Timestamp")).withColumn("product_category", coalesce(col("product_category"), lit("Unknown"))).select("product_id", "product_category", "product_start_date")
     
-    # Return the standardized dataframe
+    # Write the standardized dataframe
     df.write.format("delta").mode("append").saveAsTable(output_db+".silver_products")
 
-
-# COMMAND ----------
-
-product_bronze_df = spark.read.table(input_db+".bronze_products")
-
-standardize_product_data(product_bronze_df)
