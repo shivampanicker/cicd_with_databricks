@@ -22,4 +22,4 @@ jobs:
       
       - name: Running Unit Tests
         run: |
-          python -m unittest tests/bronze/*.py
+          python -m unittest tests/bronze/test_*.py
