@@ -6,7 +6,6 @@
 username = dbutils.notebook.entry_point.getDbutils(
 ).notebook().getContext().userName().get().replace('.', '_')
 user = username[:username.index("@")]
-dbutils.widgets.text("source_dataset", "customers")
 
 input_path = f'/FileStore/{username}_bronze_db/'
 
@@ -22,7 +21,7 @@ target_path = f"/FileStore/{username}_bronze_db_test/"
 
 # Read in the source data
 customer_df = spark.read.format("delta").option("header", True).load(
-    input_path+"bronze_"+dbutils.widgets.get("source_dataset"))
+    input_path+"bronze_customers")
 
 spark.sql(f"drop table if exists {user}_silver_db.silver_customers_test")
 # Call the function to transform the customer data into a dimension table with SCD type 2
@@ -45,5 +44,3 @@ def test_scd2_transform():
 
 # Run the unit tests
 test_scd2_transform()
-
-# COMMAND ----------
