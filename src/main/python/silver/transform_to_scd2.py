@@ -1,7 +1,6 @@
 # Databricks notebook source
 username = dbutils.notebook.entry_point.getDbutils().notebook().getContext().userName().get().replace('.','_')
 user = username[:username.index("@")]
-dbutils.widgets.text("source_dataset", "customers")
 
 input_path = f'/FileStore/{username}_bronze_db/'
 output_path = f'/FileStore/{username}_silver_db/'

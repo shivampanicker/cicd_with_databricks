@@ -30,15 +30,3 @@ sales_silver_df.write.format("delta").mode("overwrite").saveAsTable(output_db+".
 
 product_bronze_df = spark.read.table(input_db+".bronze_products")
 standardize_product_data(product_bronze_df)
-
-# COMMAND ----------
-
-display(sales_bronze_df)
-
-# COMMAND ----------
-
-display(spark.read.table(output_db+".silver_sales"))
-
-# COMMAND ----------
-
-
