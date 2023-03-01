@@ -22,7 +22,7 @@ import pytest
 username = dbutils.notebook.entry_point.getDbutils(
 ).notebook().getContext().userName().get().replace('.', '_')
 
-source_dataset = 'orders'
+source_dataset = 'customers'
 target_path = f'/FileStore/{username}_bronze_db_test/'
 
 
