@@ -23,8 +23,21 @@ def transform_to_scd2(customer_data, mode: str):
   # Generate SCD Type 2 table
   
   if mode == "test":
-    spark.sql(f"create table {user}_silver_db.silver_customers_test as select * from {user}_silver_db.silver_customers where customer_id=000000")
-    silver_customers = DeltaTable.forName(spark, user+'_silver_db.silver_customers_test')
+    spark.sql(f"""
+    CREATE TABLE IF NOT EXISTS {user}_silver_db_test.silver_customers
+      (
+      customer_id INT,
+      customer_name STRING,
+      state STRING,
+      company STRING,
+      phone_number STRING,
+      start_date TIMESTAMP,
+      end_date TIMESTAMP
+      )
+    """)
+    
+    silver_customers = DeltaTable.forName(spark, user+'_silver_db_test.silver_customers')
+    
   else:
     silver_customers = DeltaTable.forName(spark, user+'_silver_db.silver_customers')
   effective_date = lit(current_date())

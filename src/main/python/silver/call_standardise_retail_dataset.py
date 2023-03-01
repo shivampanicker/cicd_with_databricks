@@ -34,7 +34,7 @@ standardize_product_data(product_bronze_df)
 # COMMAND ----------
 
 # MAGIC %fs
-# MAGIC ls /FileStore/shivam_panicker@databricks_com/bronze_db/
+# MAGIC ls /FileStore/shivam_panicker@databricks_com_bronze_db/
 
 # COMMAND ----------
 

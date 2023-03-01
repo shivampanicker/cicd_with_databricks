@@ -56,7 +56,7 @@ def test_load_data_to_bronze():
     assert spark.read.format("delta").load(
         target_path+"bronze_"+source_dataset).count() == expected_count
 
-    dbutils.fs.rm(target_path, True)
+    #dbutils.fs.rm(target_path, True)
 
 
 # COMMAND ----------
