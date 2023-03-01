@@ -23,6 +23,11 @@ def transform_to_scd2(customer_data, mode: str):
   # Generate SCD Type 2 table
   
   if mode == "test":
+    output_path = f"/FileStore/{username}_silver_db_test/"
+    spark.sql(f""" 
+    CREATE DATABASE IF NOT EXISTS {user}_silver_db_test
+    LOCATION {output_path}
+    """)
     spark.sql(f"""
     CREATE TABLE IF NOT EXISTS {user}_silver_db_test.silver_customers
       (
