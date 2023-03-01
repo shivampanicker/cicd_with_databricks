@@ -39,7 +39,6 @@ assert expected_df.select("order_status").collect(
 
 # COMMAND ----------
 
-
 def test_transform_to_silver_2():
     # Create input data
     input_data = [("1", "100", "2022-12-11T04:03:39.000Z", "50", "US", "USD")]
@@ -48,20 +47,19 @@ def test_transform_to_silver_2():
         StructField("product_id", StringType(), True),
         StructField("sale_date", StringType(), True),
         StructField("sale_amount", StringType(), True),
-        StructField("state", StringType(), True)
+        StructField("state", StringType(), True),
         StructField("currency", StringType(), True)
     ])
     input_df = spark.createDataFrame(input_data, input_schema)
 
     # Define expected output data
-    expected_data = [("John", "Doe", "123 Main St",
-                      "New York", "NY", "12345", 50.00, "USD")]
+    expected_data = [("1", "100", "2022-12-11T04:03:39.000Z", "50", "US", "USD")]
     expected_schema = StructType([
         StructField("sale_id", StringType(), True),
         StructField("product_id", StringType(), True),
         StructField("sale_date", StringType(), True),
         StructField("sale_amount", StringType(), True),
-        StructField("state", StringType(), True)
+        StructField("state", StringType(), True),
         StructField("currency", StringType(), True)
     ])
     expected_df = spark.createDataFrame(expected_data, expected_schema)
@@ -71,3 +69,11 @@ def test_transform_to_silver_2():
 
     # Verify the result
     assert expected_df.collect() == actual_df.collect()
+
+# COMMAND ----------
+
+#test_transform_to_silver_2()
+
+# COMMAND ----------
+
+
