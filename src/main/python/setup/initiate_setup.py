@@ -1,8 +1,4 @@
 # Databricks notebook source
-pip install faker
-
-# COMMAND ----------
-
 # MAGIC %run ./generate_retail_data
 
 # COMMAND ----------
@@ -26,3 +22,5 @@ generate_customer_data_day_0(10000)
 # MAGIC %run ./create_ddl
 
 # COMMAND ----------
+
+

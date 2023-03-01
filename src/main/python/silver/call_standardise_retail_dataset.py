@@ -38,4 +38,12 @@ standardize_product_data(product_bronze_df)
 
 # COMMAND ----------
 
+display(spark.read.format("delta").load("/FileStore/shivam_panicker@databricks_com_bronze_db_test/bronze_customers/"))
+
+# COMMAND ----------
+
+display(spark.read.option("header","true").csv("/FileStore/shivam_panicker@databricks_com/retail_dataset/customers/"))
+
+# COMMAND ----------
+
 

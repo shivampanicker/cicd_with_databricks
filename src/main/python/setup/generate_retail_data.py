@@ -1,4 +1,8 @@
 # Databricks notebook source
+pip install faker
+
+# COMMAND ----------
+
 from pyspark.sql.functions import *
 from faker import Faker, Factory
 from pyspark.sql import Window
@@ -10,12 +14,10 @@ from datetime import datetime
 from faker import Faker
 from pyspark.sql.types import StructType, StructField, StringType, TimestampType, IntegerType, LongType
 from pyspark.sql.functions import col
-pip install faker
 
 # COMMAND ----------
 
-username = dbutils.notebook.entry_point.getDbutils(
-).notebook().getContext().userName().get().replace('.', '_')
+username = dbutils.notebook.entry_point.getDbutils().notebook().getContext().userName().get().replace('.', '_')
 output_dir = f'/FileStore/{username}/retail_dataset/'
 
 # COMMAND ----------
@@ -201,5 +203,3 @@ def generate_customer_data_day_2():
     customer_df.coalesce(1).write.format("csv").option(
         "header", "true").mode("append").save(output_dir+"customers")
     print("Customers day1 file generated")
-
-# COMMAND ----------
