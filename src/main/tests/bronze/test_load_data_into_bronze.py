@@ -38,13 +38,6 @@ def test_load_data_to_bronze():
     num_files = len(dbutils.fs.ls(target_path+"bronze_"+source_dataset))
     assert num_files == expected_num_files, f"Expected {expected_num_files} files, but found {num_files} files."
 
-    # Check that the output files have the expected format
-#     expected_file_format = '_delta_log/'
-#     file_info = dbutils.fs.ls(target_path+source_dataset)
-#     file_name = file_info.name
-#     file_format = file_name.split('.')[-1]
-#     assert file_format == expected_file_format, f"Expected {file_name} to be in {expected_file_format} format, but it is in {file_format} format."
-
     # Check that the output files are not empty
     for file_info in dbutils.fs.ls(target_path+"bronze_"+source_dataset):
         if ".parquet" in file_info:
@@ -55,8 +48,6 @@ def test_load_data_to_bronze():
     expected_count = 10000
     assert spark.read.format("delta").load(
         target_path+"bronze_"+source_dataset).count() == expected_count
-
-    #dbutils.fs.rm(target_path, True)
 
 
 # COMMAND ----------

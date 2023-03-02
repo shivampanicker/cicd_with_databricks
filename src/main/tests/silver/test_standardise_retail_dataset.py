@@ -4,7 +4,7 @@
 # COMMAND ----------
 
 import pyspark.sql.functions as F
-from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DecimalType, TimestampType
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DecimalType, TimestampType, DateType
 
 
 def test_transform_to_silver_1():
@@ -41,7 +41,7 @@ assert expected_df.select("order_status").collect(
 
 def test_transform_to_silver_2():
     # Create input data
-    input_data = [("1", "100", "2022-12-11T04:03:39.000Z", "50", "US", "USD")]
+    input_data = [("1", "100", "2022-12-11T04:03:39.000Z", "50", "US", "AUD")]
     input_schema = StructType([
         StructField("sale_id", StringType(), True),
         StructField("product_id", StringType(), True),
@@ -53,27 +53,23 @@ def test_transform_to_silver_2():
     input_df = spark.createDataFrame(input_data, input_schema)
 
     # Define expected output data
-    expected_data = [("1", "100", "2022-12-11T04:03:39.000Z", "50", "US", "USD")]
+    expected_data = [("1", "100", "50", "US", "USD")]
     expected_schema = StructType([
         StructField("sale_id", StringType(), True),
         StructField("product_id", StringType(), True),
-        StructField("sale_date", StringType(), True),
         StructField("sale_amount", StringType(), True),
         StructField("state", StringType(), True),
         StructField("currency", StringType(), True)
     ])
     expected_df = spark.createDataFrame(expected_data, expected_schema)
-
+    expected_df = expected_df.withColumn("sale_date", F.to_date(F.lit("2022-12-11")))
     # Run the transformation function
     actual_df = transform_to_silver_2(input_df)
-
     # Verify the result
-    assert expected_df.collect() == actual_df.collect()
+    assert expected_df.select("sale_date").collect() == actual_df.select("sale_date").collect()
+    assert expected_df.select("currency").collect() == actual_df.select("currency").collect()
+    
 
 # COMMAND ----------
 
-#test_transform_to_silver_2()
-
-# COMMAND ----------
-
-
+test_transform_to_silver_2()

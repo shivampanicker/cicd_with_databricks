@@ -12,3 +12,7 @@ dbutils.notebook.run(abs_path+"/silver/test_transform_to_scd2", 300, {})
 # COMMAND ----------
 
 dbutils.notebook.run(abs_path+"/silver/test_standardise_retail_dataset", 300, {})
+
+# COMMAND ----------
+
+dbutils.notebook.run(abs_path+"/cleanup_tests", 300, {})

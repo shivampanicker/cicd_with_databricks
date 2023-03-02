@@ -24,7 +24,7 @@ def transform_to_silver_1(orders_bronze_df):
 
 def transform_to_silver_2(sales_bronze_df):
   # Apply standardizations to sales data
-  sales_silver_df = sales_bronze_df.withColumn("sale_date", to_date(col("order_date").cast("Timestamp"))) \
+  sales_silver_df = sales_bronze_df.withColumn("sale_date", to_date(col("sale_date").cast("Date"))) \
                                    .withColumn("sale_amount", round(col("sale_amount").cast("Double") * 0.9, 2)) \
                                    .withColumn("currency", lit("USD")) \
                                    .withColumn("product_id", col("product_id").cast("Integer")) \
