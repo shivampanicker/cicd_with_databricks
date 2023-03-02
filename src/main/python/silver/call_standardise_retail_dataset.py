@@ -29,21 +29,6 @@ sales_silver_df.write.format("delta").mode("overwrite").saveAsTable(output_db+".
 # COMMAND ----------
 
 product_bronze_df = spark.read.table(input_db+".bronze_products")
-standardize_product_data(product_bronze_df)
+product_silver_df = standardize_product_data(product_bronze_df)
 
-# COMMAND ----------
-
-# MAGIC %fs
-# MAGIC ls /FileStore/shivam_panicker@databricks_com_bronze_db_test/
-
-# COMMAND ----------
-
-display(spark.read.format("delta").load("/FileStore/shivam_panicker@databricks_com_bronze_db_test/bronze_customers/"))
-
-# COMMAND ----------
-
-display(spark.read.option("header","true").csv("/FileStore/shivam_panicker@databricks_com/retail_dataset/customers/"))
-
-# COMMAND ----------
-
-
+product_silver_df.write.format("delta").mode("overwrite").saveAsTable(output_db+".silver_products")

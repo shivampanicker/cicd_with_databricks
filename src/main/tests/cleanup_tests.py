@@ -7,7 +7,7 @@ user = username[:username.index("@")]
 
 bronze_path = f'/FileStore/{username}_bronze_db_test/'
 silver_path = f'/FileStore/{username}_silver_db_test/'
-gold_path = f'/FileStore/{username}_silver_db_test/'
+gold_path = f'/FileStore/{username}_gold_db_test/'
 
 # COMMAND ----------
 

@@ -4,17 +4,7 @@ from pyspark.sql.functions import year, quarter, month, sum, avg
 
 class GoldAggregations:
 
-#   # Read in the necessary tables
-#   user = "shivam_panicker"
-#   sales_df = spark.read.table(f"{user}_silverdb.silver_sales")
-#   products_df = spark.read.table(f"{user}_silverdb.silver_products")
-#   customers_df = spark.read.table(f"{user}_silverdb.silver_customers")
-#   orders_df = spark.read.table(f"{user}_silverdb.silver_orders")
-
-
-
   # Query 1: Total number of orders
-
   def total_num_orders(spark, orders):
     return spark.sql(f"SELECT COUNT(*) as total_orders FROM {orders}")
 
@@ -52,16 +42,3 @@ class GoldAggregations:
       GROUP BY year, month
   """)
 
-#   query1 = total_num_orders()
-#   query2 = total_sales_amount_in_usd()
-#   query3 = top_10_best_selling_products()
-#   query4 = num_customers_by_state()
-#   query5 = avg_sales_by_month()
-
-
-#   # write the query results to Delta Lake in Gold layer
-#   query1.write.format("delta").mode("overwrite").save("/mnt/gold/total_orders")
-#   query2.write.format("delta").mode("overwrite").save("/mnt/gold/total_sales")
-#   query3.write.format("delta").mode("overwrite").save("/mnt/gold/best_selling_products")
-#   query4.write.format("delta").mode("overwrite").save("/mnt/gold/customers_by_state")
-#   query5.write.format("delta").mode("overwrite").save("/mnt/gold/avg_sales_by_month")

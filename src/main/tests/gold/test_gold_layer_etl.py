@@ -16,42 +16,6 @@ from gold_layer_etl import GoldAggregations
 from pyspark.sql.functions import col
 from datetime import datetime
 
-
-# def setUp(self):
-#         self.spark = SparkSession.builder.appName('test').getOrCreate()
-#         self.order_data = [
-#             ('order1', 1, datetime(2022, 1, 1, 0, 0, 0), 'completed'),
-#             ('order2', 1, datetime(2022, 1, 3, 0, 0, 0), 'completed'),
-#             ('order3', 2, datetime(2022, 1, 5, 0, 0, 0), 'pending'),
-#             ('order4', 3, datetime(2022, 1, 6, 0, 0, 0), 'completed'),
-#             ('order5', 4, datetime(2022, 1, 7, 0, 0, 0), 'completed')
-#         ]
-#         self.orders_df = self.spark.createDataFrame(self.order_data, ['order_id', 'customer_id', 'order_date', 'order_status'])
-
-#         self.sale_data = [
-#             (1, 1, datetime(2022, 1, 2, 0, 0, 0), 100, 'USD'),
-#             (2, 1, datetime(2022, 1, 4, 0, 0, 0), 150, 'USD'),
-#             (3, 2, datetime(2022, 1, 5, 0, 0, 0), 75, 'EUR'),
-#             (4, 3, datetime(2022, 1, 7, 0, 0, 0), 200, 'USD'),
-#             (5, 4, datetime(2022, 1, 8, 0, 0, 0), 120, 'EUR')
-#         ]
-#         self.sales_df = self.spark.createDataFrame(self.sale_data, ['sale_id', 'product_id', 'sale_date', 'sale_amount', 'currency'])
-
-#         self.product_data = [
-#             (1, 'electronics', datetime(2022, 1, 1, 0, 0, 0)),
-#             (2, 'furniture', datetime(2022, 1, 2, 0, 0, 0)),
-#             (3, 'clothing', datetime(2022, 1, 3, 0, 0, 0)),
-#             (4, 'electronics', datetime(2022, 1, 4, 0, 0, 0)),
-#             (5, 'furniture', datetime(2022, 1, 5, 0, 0, 0))
-#         ]
-#         self.products_df = self.spark.createDataFrame(self.product_data, ['product_id', 'product_category', 'product_start_date'])
-
-#         self.customer_data = [
-#             (1, 'Alice', 'CA', 'ABC Company', '123-456-7890', datetime(2022, 1, 1, 0, 0, 0)),
-#             (2, 'Bob', 'NY', 'DEF Company', '234-567-8901', datetime(2022, 1, 3, 0, 0, 0)),
-#             (3, 'Charlie', 'CA', 'GHI Company', '345-678-9012', datetime(2022, 1, 5, 0, 0,0))] 
-#         self.customer_df = self.spark.createDataFrame(self.customer_data, ['customer_id', 'customer_name', 'state', 'company', 'phone_number', 'start_date'])
-
 order_data = [
     ('order1', 1, datetime(2022, 1, 1, 0, 0, 0), 'completed'),
     ('order2', 1, datetime(2022, 1, 3, 0, 0, 0), 'completed'),

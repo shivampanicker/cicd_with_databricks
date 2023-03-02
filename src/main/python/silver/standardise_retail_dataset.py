@@ -10,9 +10,8 @@ output_db = f'{user}_silver_db'
 
 # COMMAND ----------
 
-from pyspark.sql.functions import to_date, col, lit, round, when, substring
+from pyspark.sql.functions import to_date, col, lit, round, when, substring, coalesce, col, upper
 from pyspark.sql.types import IntegerType
-
 
 def transform_to_silver_1(orders_bronze_df):
   # Apply standardizations to order data
@@ -33,12 +32,8 @@ def transform_to_silver_2(sales_bronze_df):
 
 # COMMAND ----------
 
-def standardize_product_data(df, mode: str):
-    from pyspark.sql.functions import coalesce, col, upper
-    
+def standardize_product_data(df):    
     # Replace null values in "product_category" column with "Unknown"
     df = df.withColumn("product_id", col("product_id").cast("Integer")).withColumn("product_start_date", col("product_start_date").cast("Timestamp")).withColumn("product_category", coalesce(col("product_category"), lit("Unknown"))).select("product_id", "product_category", "product_start_date")
     
-    # Write the standardized dataframe
-    df.write.format("delta").mode("append").saveAsTable(output_db+".silver_products")
-
+    return df
