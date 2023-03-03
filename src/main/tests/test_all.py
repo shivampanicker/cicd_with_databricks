@@ -3,6 +3,14 @@ abs_path = "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/
 
 # COMMAND ----------
 
+dbutils.notebook.run(abs_path+"/cleanup_tests", 300, {})
+
+# COMMAND ----------
+
+dbutils.notebook.run(abs_path+"../python/setup/initiate_setup
+
+# COMMAND ----------
+
 dbutils.notebook.run(abs_path+"/bronze/test_load_data_into_bronze", 300, {})
 
 # COMMAND ----------

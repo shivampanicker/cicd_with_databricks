@@ -44,4 +44,9 @@ display(spark.read.table(f"{user}_gold_db.total_orders"))
 
 # COMMAND ----------
 
+# MAGIC %fs 
+# MAGIC ls /FileStore/shivam_panicker_bronze_db_test/retail_dataset/customers/
+
+# COMMAND ----------
+
 

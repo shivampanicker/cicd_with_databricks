@@ -26,3 +26,7 @@ spark.sql(f"drop database if exists {user}_silver_db_test cascade")
 # COMMAND ----------
 
 spark.sql(f"drop database if exists {user}_gold_db_test cascade")
+
+# COMMAND ----------
+
+dbutils.fs.rm(f"/FileStore/{username}/retail_dataset/", True)
