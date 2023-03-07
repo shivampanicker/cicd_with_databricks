@@ -1,0 +1,30 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches: [develop]
+    types: [assigned, opened, synchronize, reopened]
+
+jobs: 
+  setup-databricks-workflow:
+   needs:
+     - run-integration-tests
+   runs-on: ubuntu-latest
+   steps:
+     - name: Checkout repo
+       uses: actions/checkout@v2
+     - name: Install pip
+       run: python -m pip install --upgrade pip
+
+     - name : Installing Dependancies AND Additional Environment Variables
+       run: |
+         pip install dbx --upgrade
+     - name: Setup a databricks workflows
+       run: |
+          dbx deploy \
+            --deployment-file=deployment/deploy-job.yaml \
+            --environment=prod \
+            --job=cicd_jobs \
+            --no-rebuild
+
+           dbx launch --environment=prd --trace --job=cicd_jobs

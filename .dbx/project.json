@@ -1,0 +1,13 @@
+{
+    "environments": {
+        "default": {
+            "profile": "prd"
+        },
+        "it": {
+            "profile": "it"
+        },
+        "prod": {
+            "profile": "prod"
+        }
+    }
+}
