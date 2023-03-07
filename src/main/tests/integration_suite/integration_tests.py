@@ -29,11 +29,11 @@ abs_path = f'/Repos/{username}/cicd_with_databricks/src/main/tests/'
 
 # COMMAND ----------
 
-# MAGIC %run ../src/main/tests/cleanup_tests
+# MAGIC %run ../cleanup_tests
 
 # COMMAND ----------
 
-# MAGIC %run ..src/main/python/setup/initiate_setup
+# MAGIC %run ../../python/setup/initiate_setup
 
 # COMMAND ----------
 
@@ -41,7 +41,7 @@ abs_path = f'/Repos/{username}/cicd_with_databricks/src/main/tests/'
 
 # COMMAND ----------
 
-# MAGIC %run ..src/main/python/bronze/load_data_into_bronze
+# MAGIC %run ../../python/bronze/load_data_into_bronze
 
 # COMMAND ----------
 
@@ -49,7 +49,7 @@ abs_path = f'/Repos/{username}/cicd_with_databricks/src/main/tests/'
 
 # COMMAND ----------
 
-# MAGIC %run ..src/main/python/silver/transform_to_scd2
+# MAGIC %run ../../python/silver/transform_to_scd2
 
 # COMMAND ----------
 
