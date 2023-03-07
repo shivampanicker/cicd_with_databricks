@@ -33,13 +33,10 @@ jobs:
        with:
          local-notebook-path: ./src/main/tests/test_all.py
          libraries-json: >
-           [{
-             "pypi":"faker"
-             },
-             {
-             "pypi":"pytest"
-             }
-           ]        
+           [
+              { "pypi": "faker" },
+              { "pypi": "pytest" }
+           ]       
          notebook-params-json: >
            {
              "num_rows":"1000",
