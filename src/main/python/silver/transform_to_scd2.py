@@ -98,5 +98,5 @@ def transform_to_scd2(customer_data, mode: str):
         )
         .execute()
 
-        display(customer_dim_df)
+    display(customer_dim_df)
     )
