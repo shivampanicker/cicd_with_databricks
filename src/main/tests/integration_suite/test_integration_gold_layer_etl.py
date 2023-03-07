@@ -1,10 +1,18 @@
 # Databricks notebook source
-username = dbutils.notebook.entry_point.getDbutils().notebook().getContext().userName().get().replace('.', '_')
-user = username[:username.index("@")]
+username = dbutils.notebook.entry_point.getDbutils().notebook().getContext().userName().get()
+user = username[:username.index("@")].replace('.', '_')
+
+# COMMAND ----------
+
+import sys
+import os 
+
+sys.path.append(os.path.abspath(f"/Workspace/Repos/{username}/cicd_with_databricks/src/main/python/gold/"))
 
 # COMMAND ----------
 
 from gold_layer_etl import GoldAggregations
+from pyspark.sql.functions import col
 
 # COMMAND ----------
 
@@ -31,12 +39,11 @@ query5 = GoldAggregations.avg_sales_by_month(spark, "sales")
 
 # COMMAND ----------
 
-# write the query results to Delta Lake in Gold layer
-query1.write.format("delta").mode("overwrite").saveAsTable(f"{user}_gold_db.total_orders")
-query2.write.format("delta").mode("overwrite").saveAsTable(f"{user}_gold_db.total_sales")
-query3.write.format("delta").mode("overwrite").saveAsTable(f"{user}_gold_db.best_selling_products")
-query4.write.format("delta").mode("overwrite").saveAsTable(f"{user}_gold_db.statewise_customers")
-query5.write.format("delta").mode("overwrite").saveAsTable(f"{user}_gold_db.monthly_sales")
+assert query1.select("total_orders").collect()[0].total_orders == 10000
+assert query2.select("total_sales").collect()[0].total_sales == 2301182.0999999978
+assert query3.select("product_id").limit(1).collect()[0].product_id == 401
+assert query4.select("total_customers").filter("state = 'Utah'").collect()[0].total_customers == 191
+assert query5.select("avg_sales").filter((col('year') == '2022') & (col('month') == '10')).collect()[0].avg_sales == 226.38976744186064
 
 # COMMAND ----------
 

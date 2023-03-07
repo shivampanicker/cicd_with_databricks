@@ -93,7 +93,3 @@ def test_avg_sales_by_month(spark, sales):
     assert result.select("avg_sales").filter((col('year') == '2022') & (col('month') == '1')).collect()[0].avg_sales == 129
     
 test_avg_sales_by_month(spark, "sales")
-
-# COMMAND ----------
-
-

@@ -131,9 +131,3 @@ spark.sql(
   end_date TIMESTAMP
   )
 """)
-
-# COMMAND ----------
-
-spark.sql(
-    f"""CREATE TABLE IF NOT EXISTS {user}_gold_db.gold_agg
-""")
