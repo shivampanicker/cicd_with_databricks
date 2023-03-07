@@ -14,12 +14,14 @@ jobs:
 
       - name: Installing Dependancies
         run: |
-          pip install coverage
+          pip install ./unit-test-requirements.txt
       
       - name: Running code coverage
         run: coverage run -m pytest ./src/main/tests/
 
   run-unit-tests:
+   needs:
+     - coverage
    runs-on: ubuntu-latest
    
    steps:
