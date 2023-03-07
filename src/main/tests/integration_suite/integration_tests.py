@@ -1,8 +1,4 @@
 # Databricks notebook source
-pip install pytest
-
-# COMMAND ----------
-
 import pytest
 
 # COMMAND ----------
@@ -27,7 +23,7 @@ dbutils.notebook.run(abs_path + "integration_suite/cleanup_integration_suite", 3
 
 # COMMAND ----------
 
-dbutils.notebook.run(abs_path + "../python/setup/initiate_setup", 300, {"num_rows":1000, "env":env})
+dbutils.notebook.run(abs_path + "/../python/setup/initiate_setup", 300, {"num_rows":1000, "env":env})
 
 # COMMAND ----------
 

@@ -20,7 +20,7 @@ dbutils.notebook.run(abs_path+"/cleanup_tests", 300, {"env":env})
 
 # COMMAND ----------
 
-dbutils.notebook.run(abs_path + "../python/setup/initiate_setup", 300, {"num_rows":100, "env":env})
+dbutils.notebook.run(abs_path + "/../python/setup/initiate_setup", 300, {"num_rows":100, "env":env})
 
 # COMMAND ----------
 

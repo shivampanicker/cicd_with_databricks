@@ -1,9 +1,4 @@
 # Databricks notebook source
-pip install faker
-
-
-# COMMAND ----------
-
 from pyspark.sql.functions import col
 from pyspark.sql.types import (
     StructType,
