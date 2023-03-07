@@ -1,28 +1,37 @@
 # Databricks notebook source
-username = dbutils.notebook.entry_point.getDbutils(
-).notebook().getContext().userName().get().replace('.', '_')
-user = username[:username.index("@")]
+username = (
+    dbutils.notebook.entry_point.getDbutils()
+    .notebook()
+    .getContext()
+    .userName()
+    .get()
+    .replace(".", "_")
+)
+user = username[: username.index("@")]
 
 # COMMAND ----------
 
 spark.sql(
     f"""CREATE DATABASE IF NOT EXISTS {user}_bronze_db
   LOCATION '/FileStore/{username}_bronze_db/'
-""")
+"""
+)
 
 # COMMAND ----------
 
 spark.sql(
     f"""CREATE DATABASE IF NOT EXISTS {user}_silver_db
   LOCATION '/FileStore/{username}_silver_db/'
-""")
+"""
+)
 
 # COMMAND ----------
 
 spark.sql(
     f"""CREATE DATABASE IF NOT EXISTS {user}_gold_db
   LOCATION '/FileStore/{username}_gold_db/'
-""")
+"""
+)
 
 # COMMAND ----------
 
@@ -35,7 +44,8 @@ spark.sql(
   order_status STRING,
   _rescued_data STRING
   )
-""")
+"""
+)
 
 # COMMAND ----------
 
@@ -50,7 +60,8 @@ spark.sql(
   ingest_timestamp STRING,
   _rescued_data STRING
   )
-""")
+"""
+)
 
 # COMMAND ----------
 
@@ -62,7 +73,8 @@ spark.sql(
   product_start_date STRING,
   _rescued_data STRING
   )
-""")
+"""
+)
 
 # COMMAND ----------
 
@@ -78,7 +90,8 @@ spark.sql(
   _rescued_data STRING
   )
   TBLPROPERTIES (delta.enableChangeDataFeed = true)
-""")
+"""
+)
 
 # COMMAND ----------
 
@@ -90,7 +103,8 @@ spark.sql(
   order_date TIMESTAMP,
   order_status STRING
   )
-""")
+"""
+)
 
 # COMMAND ----------
 
@@ -104,7 +118,8 @@ spark.sql(
   currency STRING,
   ingest_timestamp TIMESTAMP
   )
-""")
+"""
+)
 
 # COMMAND ----------
 
@@ -115,7 +130,8 @@ spark.sql(
   product_category STRING,
   product_start_date TIMESTAMP
   )
-""")
+"""
+)
 
 # COMMAND ----------
 
@@ -130,4 +146,5 @@ spark.sql(
   start_date TIMESTAMP,
   end_date TIMESTAMP
   )
-""")
+"""
+)
