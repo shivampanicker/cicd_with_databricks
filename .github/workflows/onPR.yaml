@@ -8,6 +8,10 @@ on:
 jobs: 
   setup-databricks-workflow:
    runs-on: ubuntu-latest
+   env:
+     DATABRICKS_HOST: ${{ secrets['DATABRICKS_HOST_PRD'] }}
+     DATABRICKS_TOKEN: ${{ secrets['DATABRICKS_TOKEN_PRD'] }}
+     ENV: prod
    steps:
      - name: Checkout repo
        uses: actions/checkout@v2
