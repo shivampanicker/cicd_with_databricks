@@ -7,8 +7,6 @@ on:
 
 jobs: 
   setup-databricks-workflow:
-   needs:
-     - run-integration-tests
    runs-on: ubuntu-latest
    steps:
      - name: Checkout repo
