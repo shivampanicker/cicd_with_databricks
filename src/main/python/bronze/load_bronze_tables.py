@@ -23,5 +23,3 @@ load_data_to_bronze(dataset, target_path)
 # MAGIC ls /FileStore/shivam_panicker@databricks_com_bronze_db/bronze_customers
 
 # COMMAND ----------
-
-

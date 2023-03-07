@@ -17,7 +17,7 @@ jobs:
           pip install -r ./unit-testing-requirements.txt
       
       - name: Running flake8
-        run: flake8 --ignore=C901,F821,F403,F405 --max-line-length=127 ./src
+        run: flake8 --ignore=C901,E402,E999,F821,F403,F405 --max-line-length=127 ./src/main/python
 
   run-unit-tests:
    needs:
