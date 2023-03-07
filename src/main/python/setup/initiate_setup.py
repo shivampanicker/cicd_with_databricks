@@ -1,4 +1,8 @@
 # Databricks notebook source
+pip install faker
+
+# COMMAND ----------
+
 # MAGIC %run ./generate_retail_data
 
 # COMMAND ----------

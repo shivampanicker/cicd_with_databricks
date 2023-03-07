@@ -30,15 +30,7 @@ jobs:
      - name: Run a databricks notebook
        uses: databricks/run-notebook@v0
        with:
-         local-notebook-path: ./src/main/tests/test_all.py
-         libraries-json: >
-           [{
-             "pypi":"faker"
-             },
-             {
-             "pypi":"pytest"
-             }
-           ]         
+         local-notebook-path: ./src/main/tests/test_all.py        
          notebook-params-json: >
            {
              "num_rows":"1000",
@@ -64,15 +56,7 @@ jobs:
      - name: Run a databricks notebook
        uses: databricks/run-notebook@v0
        with:
-         local-notebook-path: ./src/main/tests/integration_suite/integration_tests.py
-         libraries-json: >
-           [{
-             "pypi":"faker"
-             },
-             {
-             "pypi":"pytest"
-             }
-           ]         
+         local-notebook-path: ./src/main/tests/integration_suite/integration_tests.py     
          notebook-params-json: >
            {
              "num_rows":"1000",

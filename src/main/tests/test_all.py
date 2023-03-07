@@ -1,4 +1,8 @@
 # Databricks notebook source
+pip install pytest
+
+# COMMAND ----------
+
 username = dbutils.notebook.entry_point.getDbutils(
 ).notebook().getContext().userName().get()
 

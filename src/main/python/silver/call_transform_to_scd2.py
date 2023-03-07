@@ -1,4 +1,8 @@
 # Databricks notebook source
+pip install faker
+
+# COMMAND ----------
+
 input_path = f"/FileStore/{username}_bronze_db/"
 
 # COMMAND ----------
