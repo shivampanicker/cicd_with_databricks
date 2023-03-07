@@ -21,7 +21,7 @@ jobs:
 
   run-unit-tests:
    needs:
-     - coverage
+     - linting
    runs-on: ubuntu-latest
    
    steps:
