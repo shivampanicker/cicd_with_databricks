@@ -1,14 +1,21 @@
 # Databricks notebook source
+# MAGIC %run ../setup/cleanup
+
+# COMMAND ----------
+
 # MAGIC %run ../setup/initiate_setup
 
 # COMMAND ----------
 
-# MAGIC %run ./load_data_into_bronze
+env = dbutils.widgets.get("env")
+
+# COMMAND ----------
+
+# MAGIC %run ./load_data_into_bronze $env=env
 
 # COMMAND ----------
 
 # Call the load_data_to_bronze function
-dataset = dbutils.widgets.text("source_dataset", "customers")
 
 dataset = dbutils.widgets.get("source_dataset")
 
@@ -16,10 +23,3 @@ dataset = dbutils.widgets.get("source_dataset")
 target_path = f"/FileStore/{username}_bronze_db/"
 
 load_data_to_bronze(dataset, target_path)
-
-# COMMAND ----------
-
-# MAGIC %fs
-# MAGIC ls /FileStore/shivam_panicker@databricks_com_bronze_db/bronze_customers
-
-# COMMAND ----------

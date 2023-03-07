@@ -1,5 +1,13 @@
 # Databricks notebook source
+pip install faker
 
+# COMMAND ----------
+
+input_path = f"/FileStore/{username}_bronze_db/"
+
+# COMMAND ----------
+
+env = dbutils.widgets.get("env")
 
 # COMMAND ----------
 
@@ -16,11 +24,11 @@ transform_to_scd2(source_dataset_df, "prod")
 
 # COMMAND ----------
 
-generate_customer_data_day_2()
+generate_customer_data_day_2(env)
 
 # COMMAND ----------
 
-# MAGIC %run ../bronze/load_data_into_bronze
+# MAGIC %run ../bronze/load_data_into_bronze $env=env
 
 # COMMAND ----------
 

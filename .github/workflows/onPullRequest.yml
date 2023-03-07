@@ -2,6 +2,7 @@ name: Pull Request
 
 on:
   pull_request:
+    branches: [develop]
     types: [assigned, opened, synchronize, reopened]
 
 jobs:
@@ -31,6 +32,11 @@ jobs:
        uses: databricks/run-notebook@v0
        with:
          local-notebook-path: ./src/main/tests/test_all.py
+         notebook-params-json: >
+           {
+             "num_rows":"1000",
+             "env":"local"
+           }
          databricks-host: ${{secrets.DATABRICKS_HOST_PRD}}
          databricks-token: ${{secrets.DATABRICKS_TOKEN_PRD}}
          new-cluster-json: >

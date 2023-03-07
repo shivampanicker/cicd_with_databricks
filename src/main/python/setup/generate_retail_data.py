@@ -1,10 +1,4 @@
 # Databricks notebook source
-pip install faker
-
-
-# COMMAND ----------
-
-from pyspark.sql.functions import col
 from pyspark.sql.types import (
     StructType,
     StructField,
@@ -14,13 +8,8 @@ from pyspark.sql.types import (
     LongType,
 )
 from faker import Faker
-from datetime import datetime
-from pyspark.sql import SparkSession
 import random
-from pyspark.sql.functions import rand, expr, current_timestamp
-from datetime import datetime, timedelta
-from pyspark.sql import Window
-from faker import Faker, Factory
+from pyspark.sql.functions import current_timestamp
 from pyspark.sql.functions import *
 
 
@@ -39,7 +28,7 @@ output_dir = f"/FileStore/{username}/retail_dataset/"
 # COMMAND ----------
 
 
-def generate_orders_data(num_rows: int) -> None:
+def generate_orders_data(num_rows: int, env: str) -> None:
     """
     Generate fake orders data using faker library and write to Delta table in DBFS.
     """
@@ -73,14 +62,14 @@ def generate_orders_data(num_rows: int) -> None:
     # Write orders data to Delta table
     orders_df.coalesce(1).write.format("csv").option("header", "true").mode(
         "overwrite"
-    ).save(output_dir + "orders")
+    ).save(output_dir + env + "/orders")
     print("Orders file generated")
 
 
 # COMMAND ----------
 
 
-def generate_sales_data(num_rows):
+def generate_sales_data(num_rows, env: str):
     fake = Faker()
     sales_data = []
     schema = StructType(
@@ -111,14 +100,14 @@ def generate_sales_data(num_rows):
 
     sales_df.coalesce(1).write.format("csv").option("header", "true").mode(
         "overwrite"
-    ).save(output_dir + "sales")
+    ).save(output_dir + env + "/sales")
     print("Sales file generated")
 
 
 # COMMAND ----------
 
 
-def generate_product_data(num_rows):
+def generate_product_data(num_rows, env: str):
     """
     Generate product dataset using faker library with specified number of rows
 
@@ -161,7 +150,7 @@ def generate_product_data(num_rows):
 
     product_df.coalesce(1).write.format("csv").option("header", "true").mode(
         "overwrite"
-    ).save(output_dir + "products")
+    ).save(output_dir + env + "/products")
     print("Products file generated")
 
 
@@ -179,7 +168,7 @@ username = (
 output_dir = f"/FileStore/{username}/retail_dataset/"
 
 
-def generate_customer_data_day_0(num_rows: int):
+def generate_customer_data_day_0(num_rows: int, env: str):
     fake = Faker()
     customer_data = []
     schema = StructType(
@@ -211,14 +200,14 @@ def generate_customer_data_day_0(num_rows: int):
     # Write to Delta Lake as bronze layer
     customer_df.coalesce(1).write.format("csv").option("header", "true").mode(
         "overwrite"
-    ).save(output_dir + "customers/")
+    ).save(output_dir + env + "/customers/")
     print("Customers day0 file generated")
 
 
 # COMMAND ----------
 
 
-def generate_customer_data_day_2():
+def generate_customer_data_day_2(env: str):
     fake = Faker()
     customer_data = []
     schema = StructType(
@@ -228,6 +217,7 @@ def generate_customer_data_day_2():
             StructField("state", StringType(), True),
             StructField("company", StringType(), True),
             StructField("phone_number", StringType(), True),
+            StructField("start_date", TimestampType(), True),
         ]
     )
 
@@ -239,7 +229,7 @@ def generate_customer_data_day_2():
         company = fake.company()
         phone_number = fake.phone_number()
         start_date = fake.date_time_between(start_date="-1y", end_date="now")
-        customer_data.append((customer_id, customer_name, state, company, phone_number))
+        customer_data.append((customer_id, customer_name, state, company, phone_number, start_date))
 
     # create spark dataframe
     customer_df = spark.createDataFrame(customer_data, schema=schema)
@@ -247,5 +237,5 @@ def generate_customer_data_day_2():
     # Write to Delta Lake as bronze layer
     customer_df.coalesce(1).write.format("csv").option("header", "true").mode(
         "append"
-    ).save(output_dir + "customers")
+    ).save(output_dir + env + "/customers")
     print("Customers day1 file generated")

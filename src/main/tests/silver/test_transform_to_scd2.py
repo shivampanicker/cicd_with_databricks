@@ -3,17 +3,17 @@
 
 # COMMAND ----------
 
+env = dbutils.widgets.get("env")
+
+# COMMAND ----------
+
 username = dbutils.notebook.entry_point.getDbutils(
 ).notebook().getContext().userName().get().replace('.', '_')
 user = username[:username.index("@")]
 
-input_path = f'/FileStore/{username}_bronze_db_test/'
+input_path = f'/FileStore/{username}_bronze_db/' + env + '/'
 
 # COMMAND ----------
-
-# Set the target location for the delta table
-target_path = f"/FileStore/{username}_silver_db_test/"
-
 
 # Read in the source data
 customer_df = spark.read.format("delta").option("header", True).load(

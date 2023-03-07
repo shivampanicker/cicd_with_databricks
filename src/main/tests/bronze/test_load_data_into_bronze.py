@@ -12,7 +12,11 @@ import pytest
 
 # COMMAND ----------
 
-# MAGIC %run ../../python/bronze/load_data_into_bronze
+env = dbutils.widgets.get("env")
+
+# COMMAND ----------
+
+# MAGIC %run ../../python/bronze/load_data_into_bronze $env=env
 
 # COMMAND ----------
 
@@ -23,15 +27,16 @@ username = dbutils.notebook.entry_point.getDbutils(
 ).notebook().getContext().userName().get().replace('.', '_')
 
 source_dataset = 'customers'
-target_path = f'/FileStore/{username}_bronze_db_test/'
+target_path = f'/FileStore/{username}_bronze_db/' + env + "/"
 
-
+print(f"Environment is: {env}")
+      
 def test_load_data_to_bronze():
     # Call the load_data_to_bronze function to load data into bronze
     # dbutils.fs.rm(target_path, True)
     dbutils.fs.rm(target_path, True)
 
-    load_data_to_bronze(source_dataset, target_path)
+    load_data_to_bronze(source_dataset, target_path, env)
 
     # Check that the output path contains the expected number of files
     expected_num_files = 2
@@ -45,7 +50,7 @@ def test_load_data_to_bronze():
             assert file_size > 0, f"{file_info.name} is empty."
 
     # Check that the output files has expected count
-    expected_count = 10000
+    expected_count = 1000
     assert spark.read.format("delta").load(
         target_path+"bronze_"+source_dataset).count() == expected_count
 

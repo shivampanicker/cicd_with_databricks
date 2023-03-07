@@ -1,11 +1,11 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC In this code, we've added standardisation functions to
-# clean and standardise the name, address, city, and state columns
-# in the customer data. We've also added transformation functions
-# to add the customer and order details to the sales data,
-# and to convert the sales data to different currencies using exchange rates.
-# Finally, we've written the transformed data to delta lake in the Silver layer.
+# MAGIC # In this code, we've added standardisation functions to
+# MAGIC # clean and standardise the name, address, city, and state columns
+# MAGIC # in the customer data. We've also added transformation functions
+# MAGIC # to add the customer and order details to the sales data,
+# MAGIC # and to convert the sales data to different currencies using exchange rates.
+# MAGIC # Finally, we've written the transformed data to delta lake in the Silver layer.
 
 # COMMAND ----------
 
