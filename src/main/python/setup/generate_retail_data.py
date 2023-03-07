@@ -18,10 +18,10 @@ from pyspark.sql import Window
 from faker import Faker, Factory
 from pyspark.sql.functions import *
 
-pip install faker
 
 # COMMAND ----------
 
+pip install faker
 
 # COMMAND ----------
 
