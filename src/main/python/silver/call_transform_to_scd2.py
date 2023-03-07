@@ -35,7 +35,7 @@ generate_customer_data_day_2(env)
 # Set the target location for the delta table
 target_path = f"/FileStore/{username}_bronze_db/"
 
-load_data_to_bronze("customers", target_path)
+load_data_to_bronze("customers", target_path, env)
 
 # COMMAND ----------
 
