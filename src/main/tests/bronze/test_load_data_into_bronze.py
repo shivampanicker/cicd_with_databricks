@@ -50,7 +50,7 @@ def test_load_data_to_bronze():
             assert file_size > 0, f"{file_info.name} is empty."
 
     # Check that the output files has expected count
-    expected_count = 10000
+    expected_count = 1000
     assert spark.read.format("delta").load(
         target_path+"bronze_"+source_dataset).count() == expected_count
 

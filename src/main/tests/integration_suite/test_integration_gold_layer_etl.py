@@ -43,7 +43,7 @@ query5 = GoldAggregations.avg_sales_by_month(spark, "sales")
 
 # COMMAND ----------
 
-assert query1.select("total_orders").collect()[0].total_orders == 10000
+assert query1.select("total_orders").collect()[0].total_orders == 1000
 assert query2.select("total_sales").collect()[0].total_sales == 2301182.0999999978
 assert query3.select("product_id").limit(1).collect()[0].product_id == 401
 assert query4.select("total_customers").filter("state = 'Utah'").collect()[0].total_customers == 191

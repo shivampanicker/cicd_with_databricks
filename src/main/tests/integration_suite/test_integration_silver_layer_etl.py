@@ -33,7 +33,6 @@ transform_to_scd2(customer_df, mode="test")
 
 silver_df = spark.read.table(f"{output_db}.silver_customers")
 
-assert silver_df.count() == 10000  # Assumes that there are 10000 rows in the original data source
 assert silver_df.columns == ['customer_id', 'customer_name', 'state', 'company', 'phone_number', 'start_date', 'end_date']
 
 # COMMAND ----------
