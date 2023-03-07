@@ -52,8 +52,8 @@ sales_silver_df = transform_to_silver_2(sales_bronze_df)
 
 # COMMAND ----------
 
-assert orders_silver_df.count == 1000
-assert sales_silver_df.count == 1000
+assert orders_silver_df.count() == 1000
+assert sales_silver_df.count() == 1000
 
 # COMMAND ----------
 
@@ -83,7 +83,7 @@ product_silver_df = standardize_product_data(product_bronze_df)
 
 # COMMAND ----------
 
-assert product_silver_df.count == 1000
+assert product_silver_df.count() == 1000
 
 # COMMAND ----------
 
