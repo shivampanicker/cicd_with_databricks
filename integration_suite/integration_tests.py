@@ -7,10 +7,6 @@ import pytest
 
 # COMMAND ----------
 
-abs_path = "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/tests"
-
-# COMMAND ----------
-
 username = dbutils.notebook.entry_point.getDbutils(
 ).notebook().getContext().userName().get().replace('.', '_')
 user = username[:username.index("@")]
@@ -25,27 +21,51 @@ gold_path = f'/FileStore/{username}_silver_db_test/gold_customers'
 
 source_dataset = 'customers'
 target_path = f'/FileStore/{username}_bronze_db_test/'
+abs_path = f'/Repos/{username}/cicd_with_databricks/src/main/tests/'
 
 # COMMAND ----------
 
-# MAGIC %run ../src/main/python/bronze/load_data_into_bronze
+#dbutils.notebook.run(abs_path + "cleanup_tests", 300, {})
 
 # COMMAND ----------
 
-# MAGIC %run ../src/main/python/silver/transform_to_scd2
+# MAGIC %run ../src/main/tests/cleanup_tests
 
 # COMMAND ----------
 
-# Load the data into the bronze layer
-#dbutils.notebook.run(abs_path+"/../python/silver/transform_to_scd2", 600, {})
-#dbutils.notebook.run(abs_path+"/../python/bronze/load_data_into_bronze", 600, {})
+# MAGIC %run ..src/main/python/setup/initiate_setup
+
+# COMMAND ----------
+
+#dbutils.notebook.run(abs_path + "../python/setup/initiate_setup", 300, {})
+
+# COMMAND ----------
+
+# MAGIC %run ..src/main/python/bronze/load_data_into_bronze
+
+# COMMAND ----------
+
+#dbutils.notebook.run(abs_path + "../python/bronze/load_data_into_bronze", 300, {})
+
+# COMMAND ----------
+
+# MAGIC %run ..src/main/python/silver/transform_to_scd2
+
+# COMMAND ----------
+
+#dbutils.notebook.run(abs_path + "../src/main/python/silver/transform_to_scd2
+
+# COMMAND ----------
 
 # Test the bronze layer
-dbutils.fs.rm(bronze_path, True)
+
+# Load the data into the bronze layer
 load_data_to_bronze(source_dataset, target_path)
 
 bronze_df = spark.read.format("delta").load(bronze_path+"bronze_customers")
 assert bronze_df.count() == 10000  # Assumes that there are 10000 rows in the original data source
+
+# COMMAND ----------
 
 # Test the silver layer
 customer_df = spark.read.format("delta").option("header", True).load(input_path)
@@ -58,7 +78,8 @@ silver_df = spark.read.format("delta").load(silver_path)
 
 assert silver_df.count() == 10000  # Assumes that there are 10000 rows in the original data source
 assert silver_df.columns == ["customer_id", "customer_name", "state", "company", "phone_numer", "start_date", "end_date"]
-# Assumes that the standardization logic adds the "currency" column to the data
+
+# COMMAND ----------
 
 # # Test the gold layer
 # dbutils.notebook.run("gold_layer_etl", timeout_seconds=600)
@@ -72,4 +93,4 @@ print("All integration tests passed!")
 
 # COMMAND ----------
 
-dbutils.notebook.run(abs_path+"/cleanup_tests", 300, {})
+dbutils.notebook.run(abs_path+"/../src/main/tests/cleanup_tests", 300, {})

@@ -12,7 +12,7 @@ import pytest
 
 # COMMAND ----------
 
-# MAGIC %run /Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_data_into_bronze
+# MAGIC %run ../../python/bronze/load_data_into_bronze
 
 # COMMAND ----------
 

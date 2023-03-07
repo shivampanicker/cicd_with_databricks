@@ -1,5 +1,10 @@
 # Databricks notebook source
-abs_path = "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/tests"
+username = dbutils.notebook.entry_point.getDbutils(
+).notebook().getContext().userName().get()
+
+# COMMAND ----------
+
+abs_path = f"/Repos/{username}/cicd_with_databricks/src/main/tests"
 
 # COMMAND ----------
 
