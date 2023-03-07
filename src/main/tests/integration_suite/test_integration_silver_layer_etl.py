@@ -25,7 +25,7 @@ output_db = f"{user}_silver_db_test"
 # COMMAND ----------
 
 # Test the silver layer
-customer_df = spark.read.format("delta").option("header", True).load(bronze_path)
+customer_df = spark.read.format("delta").option("header", True).load(customers_bronze_path)
 
 spark.sql(f"drop table if exists {user}_silver_db_test.silver_customers")
 # Call the function to transform the customer data into a dimension table with SCD type 2
