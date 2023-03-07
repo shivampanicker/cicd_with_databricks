@@ -37,4 +37,3 @@ def load_data_to_bronze(source_dataset: str, target_path: str, env: str) -> None
     ).start(
         target_path + "bronze_" + source_dataset
     ).awaitTermination()
-
