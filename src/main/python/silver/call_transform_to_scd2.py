@@ -1,5 +1,5 @@
 # Databricks notebook source
-
+input_path = f"/FileStore/{username}_bronze_db/"
 
 # COMMAND ----------
 

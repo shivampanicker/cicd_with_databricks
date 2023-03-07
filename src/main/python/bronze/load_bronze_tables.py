@@ -7,7 +7,11 @@
 
 # COMMAND ----------
 
-# MAGIC %run ./load_data_into_bronze
+env = dbutils.widgets.get("env")
+
+# COMMAND ----------
+
+# MAGIC %run ./load_data_into_bronze $env=env
 
 # COMMAND ----------
 

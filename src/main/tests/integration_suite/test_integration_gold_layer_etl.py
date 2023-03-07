@@ -16,11 +16,15 @@ from pyspark.sql.functions import col
 
 # COMMAND ----------
 
+silver_db = f"{user}_silver_db_test"
+
+# COMMAND ----------
+
 # Read in the necessary tables
-sales_df = spark.read.table(f"{user}_silver_db.silver_sales")
-products_df = spark.read.table(f"{user}_silver_db.silver_products")
-customers_df = spark.read.table(f"{user}_silver_db.silver_customers")
-orders_df = spark.read.table(f"{user}_silver_db.silver_orders")
+sales_df = spark.read.table(f"{silver_db}.silver_sales")
+products_df = spark.read.table(f"{silver_db}.silver_products")
+customers_df = spark.read.table(f"{silver_db}.silver_customers")
+orders_df = spark.read.table(f"{silver_db}.silver_orders")
 
 # COMMAND ----------
 

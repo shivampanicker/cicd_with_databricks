@@ -13,8 +13,12 @@ user = username[: username.index("@")]
 
 # COMMAND ----------
 
+env = dbutils.widgets.get("env")
 
-dbfs_path = f"/FileStore/{username}/retail_dataset/"
+# COMMAND ----------
+
+
+dbfs_path = f"/FileStore/{username}/retail_dataset/" + env + "/"
 bronze_db = f"{user}_bronze_db"
 # Define the options for the autoloader
 bronze_options = {"mode": "DROPMALFORMED", "header": True}
@@ -22,7 +26,7 @@ bronze_options = {"mode": "DROPMALFORMED", "header": True}
 # COMMAND ----------
 
 
-def load_data_to_bronze(source_dataset: str, target_path: str) -> None:
+def load_data_to_bronze(source_dataset: str, target_path: str, env: str) -> None:
     # Ingest the data into the bronze layer
     spark.readStream.format("cloudFiles").option("cloudFiles.format", "csv").option(
         "cloudFiles.schemaLocation", target_path + "_checkpoints/" + source_dataset
@@ -34,5 +38,3 @@ def load_data_to_bronze(source_dataset: str, target_path: str) -> None:
         target_path + "bronze_" + source_dataset
     ).awaitTermination()
 
-
-# COMMAND ----------

@@ -29,16 +29,22 @@ environments:
               notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
               base_parameters:
                 source_dataset: "orders"
+                num_rows: 1000
+                env: "int"
           - task_key: "bronze-products"
             notebook_task:
               notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
               base_parameters:
                 source_dataset: "products"
+                num_rows: 1000
+                env: "int"
           - task_key: "bronze-sales"
             notebook_task:
               notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
               base_parameters:
                 source_dataset: "sales"
+                num_rows: 1000
+                env: "int"
           - task_key: "standardize-silver"
           - depends_on:
             - task_key: bronze-customers
@@ -47,6 +53,9 @@ environments:
             - task_key: bronze-orders
               notebook_task:
                 notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/silver/call_standardise_retail_dataset"
+                base_parameters:
+                  num_rows: 1000
+                  env: "int"
           - task_key: "scd2-silver-customers"
           - depends_on:
             - task_key: bronze-customers
@@ -55,9 +64,15 @@ environments:
             - task_key: bronze-orders
               notebook_task:
                 notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/silver/call_transform_to_scd2"
+                base_parameters:
+                  num_rows: 1000
+                  env: "int"
           - task_key: "aggregation-gold"
           - depends_on:
             - task_key: "standardize-silver"
             - task_key: "scd2-silver-customers"
             notebook_task:
               notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/gold/gold_layer_etl_main"
+              base_parameters:
+                num_rows: 1000
+                env: "int"

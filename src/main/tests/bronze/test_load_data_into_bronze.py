@@ -12,7 +12,11 @@ import pytest
 
 # COMMAND ----------
 
-# MAGIC %run ../../python/bronze/load_data_into_bronze
+env = dbutils.widgets.get("env")
+
+# COMMAND ----------
+
+# MAGIC %run ../../python/bronze/load_data_into_bronze $env=env
 
 # COMMAND ----------
 
@@ -23,7 +27,7 @@ username = dbutils.notebook.entry_point.getDbutils(
 ).notebook().getContext().userName().get().replace('.', '_')
 
 source_dataset = 'customers'
-target_path = f'/FileStore/{username}_bronze_db_test/'
+target_path = f'/FileStore/{username}_bronze_db/' + env + "/"
 
 
 def test_load_data_to_bronze():
@@ -31,7 +35,7 @@ def test_load_data_to_bronze():
     # dbutils.fs.rm(target_path, True)
     dbutils.fs.rm(target_path, True)
 
-    load_data_to_bronze(source_dataset, target_path)
+    load_data_to_bronze(source_dataset, target_path, env)
 
     # Check that the output path contains the expected number of files
     expected_num_files = 2

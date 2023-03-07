@@ -39,7 +39,7 @@ output_dir = f"/FileStore/{username}/retail_dataset/"
 # COMMAND ----------
 
 
-def generate_orders_data(num_rows: int) -> None:
+def generate_orders_data(num_rows: int, env: str) -> None:
     """
     Generate fake orders data using faker library and write to Delta table in DBFS.
     """
@@ -73,14 +73,14 @@ def generate_orders_data(num_rows: int) -> None:
     # Write orders data to Delta table
     orders_df.coalesce(1).write.format("csv").option("header", "true").mode(
         "overwrite"
-    ).save(output_dir + "orders")
+    ).save(output_dir + env + "/orders")
     print("Orders file generated")
 
 
 # COMMAND ----------
 
 
-def generate_sales_data(num_rows):
+def generate_sales_data(num_rows, env: str):
     fake = Faker()
     sales_data = []
     schema = StructType(
@@ -111,14 +111,14 @@ def generate_sales_data(num_rows):
 
     sales_df.coalesce(1).write.format("csv").option("header", "true").mode(
         "overwrite"
-    ).save(output_dir + "sales")
+    ).save(output_dir + env + "/sales")
     print("Sales file generated")
 
 
 # COMMAND ----------
 
 
-def generate_product_data(num_rows):
+def generate_product_data(num_rows, env: str):
     """
     Generate product dataset using faker library with specified number of rows
 
@@ -161,7 +161,7 @@ def generate_product_data(num_rows):
 
     product_df.coalesce(1).write.format("csv").option("header", "true").mode(
         "overwrite"
-    ).save(output_dir + "products")
+    ).save(output_dir + env + "/products")
     print("Products file generated")
 
 
@@ -179,7 +179,7 @@ username = (
 output_dir = f"/FileStore/{username}/retail_dataset/"
 
 
-def generate_customer_data_day_0(num_rows: int):
+def generate_customer_data_day_0(num_rows: int, env: str):
     fake = Faker()
     customer_data = []
     schema = StructType(
@@ -211,14 +211,14 @@ def generate_customer_data_day_0(num_rows: int):
     # Write to Delta Lake as bronze layer
     customer_df.coalesce(1).write.format("csv").option("header", "true").mode(
         "overwrite"
-    ).save(output_dir + "customers/")
+    ).save(output_dir + env + "/customers/")
     print("Customers day0 file generated")
 
 
 # COMMAND ----------
 
 
-def generate_customer_data_day_2():
+def generate_customer_data_day_2(env: str):
     fake = Faker()
     customer_data = []
     schema = StructType(
@@ -247,5 +247,5 @@ def generate_customer_data_day_2():
     # Write to Delta Lake as bronze layer
     customer_df.coalesce(1).write.format("csv").option("header", "true").mode(
         "append"
-    ).save(output_dir + "customers")
+    ).save(output_dir + env + "/customers")
     print("Customers day1 file generated")
