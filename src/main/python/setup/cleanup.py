@@ -1,7 +1,13 @@
 # Databricks notebook source
-username = dbutils.notebook.entry_point.getDbutils(
-).notebook().getContext().userName().get().replace('.', '_')
-user = username[:username.index("@")]
+username = (
+    dbutils.notebook.entry_point.getDbutils()
+    .notebook()
+    .getContext()
+    .userName()
+    .get()
+    .replace(".", "_")
+)
+user = username[: username.index("@")]
 
 # COMMAND ----------
 
