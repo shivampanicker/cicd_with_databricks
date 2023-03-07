@@ -5,7 +5,7 @@ on:
     types: [assigned, opened, synchronize, reopened]
 
 jobs:
-  coverage:
+  linting:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,8 +16,8 @@ jobs:
         run: |
           pip install -r ./unit-testing-requirements.txt
       
-      - name: Running code coverage
-        run: coverage run -m pytest ./src/main/tests/
+      - name: Running flake8
+        run: flake8 ./src/main/python/gold/gold_layer_etl.py
 
   run-unit-tests:
    needs:
