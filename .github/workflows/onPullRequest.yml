@@ -34,8 +34,13 @@ jobs:
          local-notebook-path: ./src/main/tests/test_all.py
          libraries-json: >
            [
-              { "pypi": "faker" },
-              { "pypi": "pytest" }
+             "pypi": 
+             {
+               "package": "pytest"
+             },
+             {
+               "package": "faker"
+             }
            ]       
          notebook-params-json: >
            {
