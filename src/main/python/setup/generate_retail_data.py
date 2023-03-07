@@ -8,10 +8,8 @@ from pyspark.sql.types import (
     LongType,
 )
 from faker import Faker
-from datetime import datetime
 import random
 from pyspark.sql.functions import current_timestamp
-from datetime import timedelta
 from pyspark.sql.functions import *
 
 
