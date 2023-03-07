@@ -1,6 +1,5 @@
 # Databricks notebook source
 from delta.tables import *
-from pyspark.sql.window import Window
 from pyspark.sql.types import *
 from pyspark.sql.functions import *
 username = (
@@ -81,7 +80,6 @@ def transform_to_scd2(customer_data, mode: str):
 
     # Merge SCD Type 2 table with existing Delta Lake table
     merge_condition = "scd2.customer_id = source.customer_id"
-    merge_delta_conf = {"mergeSchema": "true", "predicate": merge_condition}
 
     customer_dim_df = (
         silver_customers.alias("scd2")
@@ -99,4 +97,6 @@ def transform_to_scd2(customer_data, mode: str):
             }
         )
         .execute()
+
+        display(customer_dim_df)
     )

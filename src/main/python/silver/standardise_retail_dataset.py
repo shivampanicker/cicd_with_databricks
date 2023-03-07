@@ -9,17 +9,13 @@
 
 # COMMAND ----------
 
-from pyspark.sql.types import IntegerType
 from pyspark.sql.functions import (
     to_date,
     col,
     lit,
     round,
     when,
-    substring,
     coalesce,
-    col,
-    upper,
 )
 username = (
     dbutils.notebook.entry_point.getDbutils()
