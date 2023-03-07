@@ -47,7 +47,7 @@ dbutils.notebook.run(abs_path + "../python/bronze/load_data_into_bronze", 300, {
 
 # COMMAND ----------
 
-dbutils.notebook.run(abs_path + "../python/silver/transform_to_scd2
+dbutils.notebook.run(abs_path + "../python/silver/transform_to_scd2", 300, {})
 
 # COMMAND ----------
 
