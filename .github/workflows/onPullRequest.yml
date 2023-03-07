@@ -17,7 +17,7 @@ jobs:
           pip install -r ./unit-testing-requirements.txt
       
       - name: Running flake8
-        run: flake8 ./src/main/python/gold/gold_layer_etl.py
+        run: flake8 --ignore=C901,F821 ./src
 
   run-unit-tests:
    needs:
