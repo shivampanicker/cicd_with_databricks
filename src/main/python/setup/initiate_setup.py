@@ -1,24 +1,34 @@
 # Databricks notebook source
+pip install faker
+
+# COMMAND ----------
+
 # MAGIC %run ./generate_retail_data
 
 # COMMAND ----------
 
-generate_orders_data(10000)
+num_of_rows = int(dbutils.widgets.get("num_rows"))
 
 # COMMAND ----------
 
-generate_sales_data(10000)
+env = dbutils.widgets.get("env")
 
 # COMMAND ----------
 
-generate_product_data(10000)
+generate_orders_data(num_of_rows, env)
 
 # COMMAND ----------
 
-generate_customer_data_day_0(10000)
+generate_sales_data(num_of_rows, env)
+
+# COMMAND ----------
+
+generate_product_data(num_of_rows, env)
+
+# COMMAND ----------
+
+generate_customer_data_day_0(num_of_rows, env)
 
 # COMMAND ----------
 
 # MAGIC %run ./create_ddl
-
-# COMMAND ----------

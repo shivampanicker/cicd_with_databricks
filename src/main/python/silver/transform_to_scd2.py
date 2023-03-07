@@ -12,9 +12,6 @@ username = (
 )
 user = username[: username.index("@")]
 
-input_path = f"/FileStore/{username}_bronze_db/"
-output_path = f"/FileStore/{username}_silver_db/"
-
 # COMMAND ----------
 
 
