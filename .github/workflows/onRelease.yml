@@ -31,8 +31,16 @@ jobs:
        uses: databricks/run-notebook@v0
        with:
          local-notebook-path: ./src/main/tests/test_all.py
-         num_rows: 1000
-         env: "int"
+         libraries-json: >
+           {
+             "pypi":"faker",
+             "pypi":"pytest"
+           }         
+         notebook-params-json: >
+           {
+             "num_rows":"1000",
+             "env":"local"
+           }
          databricks-host: ${{secrets.DATABRICKS_HOST_PRD}}
          databricks-token: ${{secrets.DATABRICKS_TOKEN_PRD}}
          new-cluster-json: >
@@ -54,8 +62,16 @@ jobs:
        uses: databricks/run-notebook@v0
        with:
          local-notebook-path: ./src/main/tests/integration_suite/integration_tests.py
-         num_rows: 1000
-         env: "int"
+         libraries-json: >
+           {
+             "pypi":"faker",
+             "pypi":"pytest"
+           }         
+         notebook-params-json: >
+           {
+             "num_rows":"1000",
+             "env":"local"
+           }
          databricks-host: ${{secrets.DATABRICKS_HOST_PRD}}
          databricks-token: ${{secrets.DATABRICKS_TOKEN_PRD}}
          new-cluster-json: >

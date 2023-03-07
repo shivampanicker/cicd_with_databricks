@@ -1,5 +1,4 @@
 # Databricks notebook source
-from pyspark.sql.functions import col
 from pyspark.sql.types import (
     StructType,
     StructField,
@@ -10,12 +9,9 @@ from pyspark.sql.types import (
 )
 from faker import Faker
 from datetime import datetime
-from pyspark.sql import SparkSession
 import random
-from pyspark.sql.functions import rand, expr, current_timestamp
-from datetime import datetime, timedelta
-from pyspark.sql import Window
-from faker import Faker, Factory
+from pyspark.sql.functions import current_timestamp
+from datetime import timedelta
 from pyspark.sql.functions import *
 
 
@@ -223,6 +219,7 @@ def generate_customer_data_day_2(env: str):
             StructField("state", StringType(), True),
             StructField("company", StringType(), True),
             StructField("phone_number", StringType(), True),
+            StructField("start_date", TimestampType(), True),
         ]
     )
 
@@ -234,7 +231,7 @@ def generate_customer_data_day_2(env: str):
         company = fake.company()
         phone_number = fake.phone_number()
         start_date = fake.date_time_between(start_date="-1y", end_date="now")
-        customer_data.append((customer_id, customer_name, state, company, phone_number))
+        customer_data.append((customer_id, customer_name, state, company, phone_number, start_date))
 
     # create spark dataframe
     customer_df = spark.createDataFrame(customer_data, schema=schema)
