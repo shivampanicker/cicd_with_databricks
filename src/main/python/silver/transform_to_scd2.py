@@ -83,7 +83,7 @@ def transform_to_scd2(customer_data, mode: str):
 
     customer_dim_df = (
         silver_customers.alias("scd2")
-        .merge(scd2_data.alias("source"), "scd2.customer_id = source.customer_id")
+        .merge(scd2_data.alias("source"), merge_condition)
         .whenMatchedUpdate(set={"end_date": date_sub(current_date(), 1)})
         .whenNotMatchedInsert(
             values={
@@ -99,7 +99,3 @@ def transform_to_scd2(customer_data, mode: str):
         .execute()
     )
     display(customer_dim_df)
-
-# COMMAND ----------
-
-
