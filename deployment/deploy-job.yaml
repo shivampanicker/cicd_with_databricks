@@ -12,14 +12,14 @@ environments:
   prod:
     jobs:
       - name: "cicd_jobs"
-      - new_cluster:
-            num_workers: 1
-            spark_version: "11.3.x-scala2.12"
-            "node_type_id": "i3.xlarge"
-        <<: 
-          - *default-permissions
         tasks:
           - task_key: "bronze-customers"
+            new_cluster:
+                num_workers: 1
+                spark_version: "11.3.x-scala2.12"
+                "node_type_id": "i3.xlarge"
+            <<: 
+              - *default-permissions            
             notebook_task:
               notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
               base_parameters:
