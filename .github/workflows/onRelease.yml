@@ -1,8 +1,7 @@
 name: release
 on:
-  pull_request:
+  push:
     branches: [main]
-    types: [assigned, opened, synchronize, reopened]
 
 jobs:
   linting:
