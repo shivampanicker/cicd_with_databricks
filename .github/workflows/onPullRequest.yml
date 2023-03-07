@@ -14,7 +14,7 @@ jobs:
 
       - name: Installing Dependancies
         run: |
-          pip install ./unit-testing-requirements.txt
+          pip install -r ./unit-testing-requirements.txt
       
       - name: Running code coverage
         run: coverage run -m pytest ./src/main/tests/
