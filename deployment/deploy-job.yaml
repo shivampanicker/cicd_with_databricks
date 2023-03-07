@@ -1,0 +1,63 @@
+default-permissions: &default-permissions
+  permissions:
+    access_control_list:
+    - group_name: cicd_users
+      permission_level: CAN_VIEW
+    - user_name: yas.mokri@databricks.com
+      permission_level: CAN_MANAGE
+    - user_name: shivam.panicker@databricks.com
+      permission_level: IS_OWNER
+
+environments:
+  prod:
+    jobs:
+      - name: "cicd_jobs"
+      - new_cluster:
+            num_workers: 1
+            spark_version: "11.3.x-scala2.12"
+            "node_type_id": "i3.xlarge"
+        <<: 
+          - *default-permissions
+        tasks:
+          - task_key: "bronze-customers"
+            notebook_task:
+              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
+              base_parameters:
+                source_dataset: "customers"
+          - task_key: "bronze-orders"
+            notebook_task:
+              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
+              base_parameters:
+                source_dataset: "orders"
+          - task_key: "bronze-products"
+            notebook_task:
+              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
+              base_parameters:
+                source_dataset: "products"
+          - task_key: "bronze-sales"
+            notebook_task:
+              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
+              base_parameters:
+                source_dataset: "sales"
+          - task_key: "standardize-silver"
+          - depends_on:
+            - task_key: bronze-customers
+            - task_key: bronze-products
+            - task_key: bronze-sales
+            - task_key: bronze-orders
+              notebook_task:
+                notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/silver/call_standardise_retail_dataset"
+          - task_key: "scd2-silver-customers"
+          - depends_on:
+            - task_key: bronze-customers
+            - task_key: bronze-products
+            - task_key: bronze-sales
+            - task_key: bronze-orders
+              notebook_task:
+                notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/silver/call_transform_to_scd2"
+          - task_key: "aggregation-gold"
+          - depends_on:
+            - task_key: "standardize-silver"
+            - task_key: "scd2-silver-customers"
+            notebook_task:
+              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/gold/gold_layer_etl_main"
