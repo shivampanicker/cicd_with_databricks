@@ -29,7 +29,8 @@ username = dbutils.notebook.entry_point.getDbutils(
 source_dataset = 'customers'
 target_path = f'/FileStore/{username}_bronze_db/' + env + "/"
 
-
+print(f"Environment is: {env})
+      
 def test_load_data_to_bronze():
     # Call the load_data_to_bronze function to load data into bronze
     # dbutils.fs.rm(target_path, True)
