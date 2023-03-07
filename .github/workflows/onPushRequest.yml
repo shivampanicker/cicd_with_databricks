@@ -32,8 +32,8 @@ jobs:
        uses: databricks/run-notebook@v0
        with:
          local-notebook-path: ./src/main/tests/test_all.py
-         num_rows = 1000
-         env = "int"
+         num_rows: 1000
+         env: "int"
          databricks-host: ${{secrets.DATABRICKS_HOST_PRD}}
          databricks-token: ${{secrets.DATABRICKS_TOKEN_PRD}}
          new-cluster-json: >
@@ -55,8 +55,8 @@ jobs:
        uses: databricks/run-notebook@v0
        with:
          local-notebook-path: ./src/main/tests/integration_suite/integration_tests.py
-         num_rows = 1000
-         env = "int"
+         num_rows: 1000
+         env: "int"
          databricks-host: ${{secrets.DATABRICKS_HOST_PRD}}
          databricks-token: ${{secrets.DATABRICKS_TOKEN_PRD}}
          new-cluster-json: >
