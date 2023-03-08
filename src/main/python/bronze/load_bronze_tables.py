@@ -1,12 +1,4 @@
 # Databricks notebook source
-# MAGIC %run ../setup/cleanup
-
-# COMMAND ----------
-
-# MAGIC %run ../setup/initiate_setup
-
-# COMMAND ----------
-
 env = dbutils.widgets.get("env")
 
 # COMMAND ----------

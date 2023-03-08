@@ -31,4 +31,8 @@ generate_customer_data_day_0(num_of_rows, env)
 
 # COMMAND ----------
 
+# MAGIC %run ./cleanup
+
+# COMMAND ----------
+
 # MAGIC %run ./create_ddl

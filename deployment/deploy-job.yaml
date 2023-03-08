@@ -13,7 +13,18 @@ environments:
     jobs:
       - name: "cicd_jobs"
         tasks:
+          - task_key: "setup-tables"
+            new_cluster:
+                num_workers: 1
+                spark_version: "11.3.x-scala2.12"
+                "node_type_id": "i3.xlarge"
+            <<: 
+              - *default-permissions            
+            notebook_task:
+              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/setup/initiate_setup"        
           - task_key: "bronze-customers"
+            depends_on:
+              - task_key: "setup-tables"
             new_cluster:
                 num_workers: 1
                 spark_version: "11.3.x-scala2.12"
@@ -27,6 +38,8 @@ environments:
                 num_rows: "10000"
                 env: ""
           - task_key: "bronze-orders"
+            depends_on:
+              - task_key: "setup-tables"
             new_cluster:
                 num_workers: 1
                 spark_version: "11.3.x-scala2.12"
@@ -40,6 +53,8 @@ environments:
                 num_rows: "10000"
                 env: ""
           - task_key: "bronze-products"
+            depends_on:
+              - task_key: "setup-tables"
             new_cluster:
                 num_workers: 1
                 spark_version: "11.3.x-scala2.12"
@@ -53,6 +68,8 @@ environments:
                 num_rows: "10000"
                 env: ""
           - task_key: "bronze-sales"
+            depends_on:
+              - task_key: "setup-tables"
             new_cluster:
                 num_workers: 1
                 spark_version: "11.3.x-scala2.12"
