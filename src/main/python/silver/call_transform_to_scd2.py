@@ -3,6 +3,17 @@ pip install faker
 
 # COMMAND ----------
 
+username = (
+    dbutils.notebook.entry_point.getDbutils()
+    .notebook()
+    .getContext()
+    .userName()
+    .get()
+    .replace(".", "_")
+)
+
+# COMMAND ----------
+
 input_path = f"/FileStore/{username}_bronze_db/"
 
 # COMMAND ----------

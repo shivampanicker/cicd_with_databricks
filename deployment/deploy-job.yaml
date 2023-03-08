@@ -77,7 +77,6 @@ environments:
           - task_key: "standardize-silver"
             job_cluster_key: "cluster-setup"
             depends_on:
-              - task_key: "bronze-customers"
               - task_key: "bronze-products"
               - task_key: "bronze-sales"
               - task_key: "bronze-orders"
@@ -89,9 +88,6 @@ environments:
             job_cluster_key: "cluster-setup"
             depends_on:
               - task_key: "bronze-customers"
-              - task_key: "bronze-products"
-              - task_key: "bronze-sales"
-              - task_key: "bronze-orders"
             notebook_task:
               notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/silver/call_transform_to_scd2"
               base_parameters:
