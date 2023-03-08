@@ -1,0 +1,19 @@
+{
+    "environments": {
+        "default": {
+            "profile": "prd",
+            "workspace_dir": "/Shared/dbx/projects/cicd_demo",
+            "artifact_location": "dbfs:/dbx/local/cicd_demo"
+        },
+        "it": {
+            "profile": "it",
+            "workspace_dir": "/Shared/dbx/projects/cicd_demo",
+            "artifact_location": "dbfs:/dbx/int/cicd_demo"
+        },
+        "prod": {
+            "profile": "prod",
+            "workspace_dir": "/Shared/dbx/projects/cicd_demo",
+            "artifact_location": "dbfs:/dbx/cicd_demo"
+        }
+    }
+}

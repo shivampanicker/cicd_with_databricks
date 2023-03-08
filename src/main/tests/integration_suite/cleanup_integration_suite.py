@@ -9,11 +9,19 @@ env = dbutils.widgets.get("env")
 
 # COMMAND ----------
 
-bronze_path = f'/FileStore/{username}_bronze_db' + env
+bronze_path = f'/FileStore/{username}_bronze_db/' + env
 
 # COMMAND ----------
 
 dbutils.fs.rm(bronze_path, True)
+
+# COMMAND ----------
+
+retail_dataset = f'/FileStore/{username}/retail_dataset/' + env
+
+# COMMAND ----------
+
+dbutils.fs.rm(retail_dataset, True)
 
 # COMMAND ----------
 

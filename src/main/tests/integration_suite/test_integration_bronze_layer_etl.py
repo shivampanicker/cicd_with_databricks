@@ -34,7 +34,7 @@ source_dataset = 'products'
 
 load_data_to_bronze(source_dataset, target_path, env)
 
-products_bronze_df = spark.read.format("delta").load(target_path+"/bronze_customers")
+products_bronze_df = spark.read.format("delta").load(target_path+"/bronze_products")
 assert products_bronze_df.count() == 1000  # Assumes that there are 1000 rows in the original data source
 
 # COMMAND ----------
@@ -45,7 +45,7 @@ source_dataset = 'orders'
 
 load_data_to_bronze(source_dataset, target_path, env)
 
-orders_bronze_df = spark.read.format("delta").load(target_path+"/bronze_customers")
+orders_bronze_df = spark.read.format("delta").load(target_path+"/bronze_orders")
 assert orders_bronze_df.count() == 1000  # Assumes that there are 1000 rows in the original data source
 
 # COMMAND ----------
@@ -56,5 +56,5 @@ source_dataset = 'sales'
 
 load_data_to_bronze(source_dataset, target_path, env)
 
-sales_bronze_df = spark.read.format("delta").load(target_path+"/bronze_customers")
+sales_bronze_df = spark.read.format("delta").load(target_path+"/bronze_sales")
 assert sales_bronze_df.count() == 1000  # Assumes that there are 1000 rows in the original data source
