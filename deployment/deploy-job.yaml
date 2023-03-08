@@ -1,10 +1,13 @@
-cluster-setup:
+custom:
   basic-cluster-props: &basic-cluster-props
     spark_version: "11.3.x-scala2.12"
     node_type_id: "i3.xlarge"
     runtime_engine: STANDARD
-    num_workers: 1
 
+  basic-static-cluster: &basic-static-cluster
+    new_cluster:
+      <<: *basic-cluster-props
+      num_workers: 1
 
 default-permissions: &default-permissions
   permissions:
@@ -20,6 +23,9 @@ environments:
   prod:
     jobs:
       - name: "cicd_jobs"
+        job_clusters:
+          - job_cluster_key: "cluster-setup"
+            <<: *basic-static-cluster
         tasks:
           - task_key: "setup-tables"
             job_cluster_key: "cluster-setup"           
