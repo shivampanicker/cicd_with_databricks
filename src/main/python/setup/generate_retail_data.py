@@ -183,7 +183,6 @@ def generate_customer_data_day_0(num_rows: int, env: str):
     )
 
     for i in range(num_rows):
-        #customer_id = random.randint(1, 10001)
         customer_id = i
         customer_name = fake.name()
         state = fake.state()
@@ -224,7 +223,6 @@ def generate_customer_data_day_2(env: str):
 
     # Generate customer data with random start_date
     for i in range(3000):
-        #customer_id = random.randint(7000, 10001)
         customer_id = i
         customer_name = fake.name()
         state = fake.state()
