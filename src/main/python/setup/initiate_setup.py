@@ -3,6 +3,10 @@ pip install faker
 
 # COMMAND ----------
 
+# MAGIC %run ./cleanup
+
+# COMMAND ----------
+
 # MAGIC %run ./generate_retail_data
 
 # COMMAND ----------
