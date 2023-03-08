@@ -1,6 +1,6 @@
 name: Pull Request on main branch
 on:
-  pull:
+  pull_request:
     branches: [main]
     types: [assigned, opened, synchronize, reopened]
 jobs:
