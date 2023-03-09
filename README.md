@@ -32,7 +32,7 @@ __Setup github configuration with Databricks__
 * Git provider (Github) --> Git provider username or email (your git credentials) --> Token
 
 __Configure github actions (CICD)__
-* Clone the repo- https://github.com/shivampanicker/cicd_with_databricks.git 
+* Fork the repo- https://github.com/shivampanicker/cicd_with_databricks.git 
 * Create 2 branches
     * *develop*: on main
     * *feature/{username}*: on develop
