@@ -1,14 +1,15 @@
-name: Push Request to develop branch
-
+name: Pull Request on main branch
 on:
-  push:
-    branches: [develop]
-
+  pull_request:
+    branches: [main]
+    types: [assigned, opened, synchronize, reopened]
 jobs:
-
   linting:
     runs-on: ubuntu-latest
-
+    env:
+      DATABRICKS_HOST: ${{ secrets['DATABRICKS_HOST_PRD'] }}
+      DATABRICKS_TOKEN: ${{ secrets['DATABRICKS_TOKEN_PRD'] }}
+      ENV: prod
     steps:
       - uses: actions/checkout@v2.3.4
       - uses: actions/setup-python@v2
@@ -31,7 +32,7 @@ jobs:
      - name: Run a databricks notebook
        uses: databricks/run-notebook@v0
        with:
-         local-notebook-path: ./src/main/tests/test_all.py      
+         local-notebook-path: ./src/main/tests/test_all.py        
          notebook-params-json: >
            {
              "num_rows":"1000",
@@ -57,7 +58,7 @@ jobs:
      - name: Run a databricks notebook
        uses: databricks/run-notebook@v0
        with:
-         local-notebook-path: ./src/main/tests/integration_suite/integration_tests.py        
+         local-notebook-path: ./src/main/tests/integration_suite/integration_tests.py     
          notebook-params-json: >
            {
              "num_rows":"1000",
