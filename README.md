@@ -54,7 +54,9 @@ __Action time!__
 * Review the integration_suite test which uses Files in Repos feature and fill in the missing elements.
     * src/main/python/gold/gold_layer_etl.py
     * src/main/tests/integration_suite/test_integration_gold_layer_etl
-* Review the dbx deployment file and github workflow files to understand the CICD plan.
+* Review the dbx deployment file
+    * Open cicd_with_databricks/deployment/deploy-job.yaml and update notebook_path variable to your Databricks Repos location.  
+* Review files under .github/workflow/ to understand the CICD plan.
 * Create a pull request and view the CICD unit testing job that spins up in github → actions.
 * Once it succeeds, merge the pull request into develop branch and view the CICD integration testing job that spins up.
 * Once integration tests are completed on develop branch, raise a PR from develop branch into main. View the CICD job that spins up, runs unit & integration tests.
