@@ -59,15 +59,3 @@ __Action time!__
 * Once it succeeds, merge the pull request into develop branch and view the CICD integration testing job that spins up.
 * Once integration tests are completed on develop branch, raise a PR from develop branch into main. View the CICD job that spins up, runs unit & integration tests.
 * Once it succeeds, merge the pull request into develop branch and view the CICD job that creates Databricks workflow jobs and launches them.
-
-__High Level Design__
-
-![alt text](https://github.com/shivampanicker/cicd_with_databricks/tree/main/images/cicd_design?raw=true)
-
-__Git Repos on Databricks__
-
-![alt text](https://github.com/shivampanicker/cicd_with_databricks/tree/main/images/TestingPyramid.png?raw=true)
-
-__DBX__
-
-![alt text](https://github.com/shivampanicker/cicd_with_databricks/tree/main/images/Dbx.png?raw=true)
