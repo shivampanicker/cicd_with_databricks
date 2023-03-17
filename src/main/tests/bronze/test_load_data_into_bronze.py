@@ -61,4 +61,3 @@ test_load_data_to_bronze()
 # COMMAND ----------
 
 # add this line to trigger a commit
-# add this line to trigger a commit
