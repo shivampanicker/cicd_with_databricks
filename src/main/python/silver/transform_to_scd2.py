@@ -39,7 +39,7 @@ def transform_to_scd2(customer_data, mode: str):
         spark.sql(
             f"""
     CREATE DATABASE IF NOT EXISTS {user}_silver_db_test
-    LOCATION `{output_path}`
+    LOCATION '{output_path}'
     """
         )
         spark.sql(
