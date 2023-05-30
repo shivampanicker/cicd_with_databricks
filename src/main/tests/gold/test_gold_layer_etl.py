@@ -56,17 +56,6 @@ products_df.createOrReplaceTempView("products")
 customers_df.createOrReplaceTempView("customers")
 sales_df.createOrReplaceTempView("sales")
 
-
-def test_total_num_orders(spark, orders):
-
-    # Execute function
-    result = GoldAggregations.total_num_orders(spark, orders)
-    # Check output
-    assert result.select("total_orders").collect()[0].total_orders == orders_df.count()
-                        
-
-test_total_num_orders(spark, "orders")
-
 def test_total_sales_amount_in_usd(spark, sales):
     result = GoldAggregations.total_sales_amount_in_usd(spark, sales)
     assert result.select("total_sales").collect()[0].total_sales == 450
@@ -93,3 +82,14 @@ def test_avg_sales_by_month(spark, sales):
     assert result.select("avg_sales").filter((col('year') == '2022') & (col('month') == '1')).collect()[0].avg_sales == 129
     
 test_avg_sales_by_month(spark, "sales")
+
+
+def test_total_num_orders(spark, orders):
+
+    # Execute function
+    result = GoldAggregations.total_num_orders(spark, orders)
+    # Check the output
+    assert result.select("total_orders").collect()[0].total_orders == orders_df.count()
+                        
+
+test_total_num_orders(spark, "orders")

@@ -1,9 +1,4 @@
 # Databricks notebook source
-# MAGIC %md
-# MAGIC <img src="https://github.com/shivampanicker/cicd_with_databricks/tree/main/images/TestingPyramid.png?raw=true" style="width: 650px; max-width: 100%; height: auto" />
-
-# COMMAND ----------
-
 pip install pytest
 
 # COMMAND ----------

@@ -68,6 +68,7 @@ def test_transform_to_silver_2():
     # Verify the result
     assert expected_df.select("sale_date").collect() == actual_df.select("sale_date").collect()
     assert expected_df.select("currency").collect() == actual_df.select("currency").collect()
+    assert expected_df.select("sale_id").collect() == actual_df.select("sale_id").collect()
     
 
 # COMMAND ----------
