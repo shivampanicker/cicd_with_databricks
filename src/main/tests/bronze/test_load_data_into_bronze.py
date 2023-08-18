@@ -43,13 +43,13 @@ def test_load_data_to_bronze():
     num_files = len(dbutils.fs.ls(target_path+"bronze_"+source_dataset))
     assert num_files == expected_num_files, f"Expected {expected_num_files} files, but found {num_files} files."
 
-    # Check that the output files are not empty
+    # Check that the output files are not empty 
     for file_info in dbutils.fs.ls(target_path+"bronze_"+source_dataset):
         if ".parquet" in file_info:
             file_size = file_info.size
             assert file_size > 0, f"{file_info.name} is empty."
 
-    # Check that the output files has expected count
+    # Check that the output files has expected count 
     expected_count = 1000
     assert spark.read.format("delta").load(
         target_path+"bronze_"+source_dataset).count() == expected_count
