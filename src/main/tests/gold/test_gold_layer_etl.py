@@ -84,12 +84,12 @@ def test_avg_sales_by_month(spark, sales):
 test_avg_sales_by_month(spark, "sales")
 
 
-# def test_total_num_orders(spark, orders):
+def test_total_num_orders(spark, orders):
 
-#     # Execute function
-#     result = GoldAggregations.total_num_orders(spark, orders)
-#     # Check the output
-#     assert result.select("total_orders").collect()[0].total_orders == orders_df.count()
+    # Execute function
+    result = GoldAggregations.total_num_orders(spark, orders)
+    # Check the output
+    assert result.select("total_orders").collect()[0].total_orders == orders_df.count()
                         
 
-# test_total_num_orders(spark, "orders")
+test_total_num_orders(spark, "orders")
