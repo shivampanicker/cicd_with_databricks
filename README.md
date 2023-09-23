@@ -5,7 +5,7 @@ Continuous Integration and Continuous Deployment (CI/CD) is a process used to de
 Databricks is a cloud-based data engineering and analytics platform that provides a collaborative environment for building, managing, and deploying data pipelines, machine learning models, and analytics applications. It also provides an API to programmatically interact with the Databricks workspace.
 
 In this repository, we'll discuss how to set up CI/CD pipeline with Databricks using GitHub Actions, Databricks CLI, and Databricks REST API.
-
+..
 ## Prerequisites
 * A GitHub account.
 * A Databricks account with an active workspace.
