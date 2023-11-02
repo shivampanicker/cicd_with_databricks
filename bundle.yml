@@ -12,7 +12,7 @@ resources:
             spark_version: 12.2.x-scala2.12
             node_type_id: i3.xlarge
             num_workers: 1
-        tasks:
+          tasks:
           - task_key: "setup-tables"
             job_cluster_key: "cluster-setup"           
             notebook_task:
