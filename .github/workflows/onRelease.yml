@@ -28,7 +28,7 @@ jobs:
 
       # Deploy the bundle to the "prod" target as defined
       # in the bundle's settings file.
-      - run: databricks bundle deploy
+      - run: databricks bundle deploy -t prod
         working-directory: .
         env:
           DATABRICKS_HOST: ${{ secrets['DATABRICKS_HOST_PRD'] }}

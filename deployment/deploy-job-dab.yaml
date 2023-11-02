@@ -87,3 +87,6 @@ resources:
               notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/gold/gold_layer_etl_main"
               base_parameters:
                 env: ""
+targets:
+  prod:
+    default: true

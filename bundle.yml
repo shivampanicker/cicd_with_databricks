@@ -1,1 +1,92 @@
 # yaml-language-server: $schema=bundle_config_schema.json
+bundle:
+  name: cicd-with-databricks-dab
+
+resources:
+  jobs:
+    cicd_jobs:
+      name: cicd_jobs
+      job_clusters:
+        - job_cluster_key: cicd-demo-cluster
+          new_cluster:
+            spark_version: 12.2.x-scala2.12
+            node_type_id: i3.xlarge
+            num_workers: 1
+        tasks:
+          - task_key: "setup-tables"
+            job_cluster_key: "cluster-setup"           
+            notebook_task:
+              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/setup/initiate_setup"      
+              base_parameters:
+                num_rows: "10000"
+                env: ""
+          - task_key: "bronze-customers"
+            job_cluster_key: "cluster-setup"
+            depends_on:
+              - task_key: "setup-tables"          
+            notebook_task:
+              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
+              base_parameters:
+                source_dataset: "customers"
+                num_rows: "10000"
+                env: ""
+          - task_key: "bronze-orders"
+            job_cluster_key: "cluster-setup"
+            depends_on:
+              - task_key: "setup-tables"
+            notebook_task:
+              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
+              base_parameters:
+                source_dataset: "orders"
+                num_rows: "10000"
+                env: ""
+          - task_key: "bronze-products"
+            job_cluster_key: "cluster-setup"
+            depends_on:
+              - task_key: "setup-tables"
+            notebook_task:
+              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
+              base_parameters:
+                source_dataset: "products"
+                num_rows: "10000"
+                env: ""
+          - task_key: "bronze-sales"
+            job_cluster_key: "cluster-setup"
+            depends_on:
+              - task_key: "setup-tables" 
+            notebook_task:
+              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
+              base_parameters:
+                source_dataset: "sales"
+                num_rows: "10000"
+                env: ""
+          - task_key: "standardize-silver"
+            job_cluster_key: "cluster-setup"
+            depends_on:
+              - task_key: "bronze-products"
+              - task_key: "bronze-sales"
+              - task_key: "bronze-orders"
+            notebook_task:
+              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/silver/call_standardise_retail_dataset"
+              base_parameters:
+                env: ""
+          - task_key: "scd2-silver-customers"
+            job_cluster_key: "cluster-setup"
+            depends_on:
+              - task_key: "bronze-customers"
+            notebook_task:
+              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/silver/call_transform_to_scd2"
+              base_parameters:
+                env: ""
+          - task_key: "aggregation-gold"
+            job_cluster_key: "cluster-setup"
+            depends_on:
+              - task_key: "standardize-silver"
+              - task_key: "scd2-silver-customers"
+            notebook_task:
+              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/gold/gold_layer_etl_main"
+              base_parameters:
+                env: ""
+targets:
+  prod:
+    default: true
