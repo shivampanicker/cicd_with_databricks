@@ -1,30 +1,62 @@
-name: Release code to production
+# This workflow validates, deploys, and runs the specified bundle
+# within a production target named "prod".
+name: "Production deployment"
+
+# Ensure that only a single job or workflow using the same concurrency group
+# runs at a time.
+concurrency: 1
+
+# Trigger this workflow whenever a pull request is pushed to the repo's
+# main branch.
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
-jobs: 
-  setup-databricks-workflow:
-   runs-on: ubuntu-latest
-   env:
-     DATABRICKS_HOST: ${{ secrets['DATABRICKS_HOST_PRD'] }}
-     DATABRICKS_TOKEN: ${{ secrets['DATABRICKS_TOKEN_PRD'] }}
-     ENV: prod
-   steps:
-     - name: Checkout repo
-       uses: actions/checkout@v2
-     - name: Install pip
-       run: python -m pip install --upgrade pip
+jobs:
+  deploy:
+    name: "Deploy bundle"
+    runs-on: ubuntu-latest
 
-     - name : Installing Dependancies AND Additional Environment Variables
-       run: |
-         pip install dbx --upgrade
-     - name: Setup a databricks workflows
-       run: |
-          dbx deploy \
-            --deployment-file=deployment/deploy-job-dab.yaml \
-            --environment=prod \
-            --job=cicd_jobs \
-            --no-rebuild
+    steps:
+      # Check out this repo, so that this workflow can access it.
+      - uses: actions/checkout@v3
 
-          dbx launch --environment=prod --trace --job=cicd_jobs
+      # Download the Databricks CLI.
+      # See https://github.com/databricks/setup-cli
+      - uses: databricks/setup-cli@main
+
+      # Deploy the bundle to the "prod" target as defined
+      # in the bundle's settings file.
+      - run: databricks bundle deploy
+        working-directory: .
+        env:
+          DATABRICKS_HOST: ${{ secrets['DATABRICKS_HOST_PRD'] }}
+          DATABRICKS_TOKEN: ${{ secrets['DATABRICKS_TOKEN_PRD'] }}
+          ENV: prod
+
+  # Validate, deploy, and then run the bundle.
+  pipeline_update:
+    name: "Run pipeline update"
+    runs-on: ubuntu-latest
+
+    # Run the "deploy" job first.
+    needs:
+      - deploy
+
+    steps:
+      # Check out this repo, so that this workflow can access it.
+      - uses: actions/checkout@v3
+
+      # Use the downloaded Databricks CLI.
+      - uses: databricks/setup-cli@main
+
+
+      # Run the Databricks workflow named "cicd_jobs" as defined in the
+      # bundle that was just deployed.
+      - run: databricks bundle run cicd_jobs --refresh-all
+        working-directory: .
+        env:
+          DATABRICKS_HOST: ${{ secrets['DATABRICKS_HOST_PRD'] }}
+          DATABRICKS_TOKEN: ${{ secrets['DATABRICKS_TOKEN_PRD'] }}
+          ENV: prod
