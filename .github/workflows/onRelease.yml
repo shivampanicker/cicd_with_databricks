@@ -54,7 +54,7 @@ jobs:
 
       # Run the Databricks workflow named "cicd_jobs" as defined in the
       # bundle that was just deployed.
-      - run: databricks bundle run cicd_jobs --refresh-all
+      - run: databricks bundle run cicd-with-databricks-dab --refresh-all
         working-directory: .
         env:
           DATABRICKS_HOST: ${{ secrets['DATABRICKS_HOST_PRD'] }}
