@@ -22,7 +22,7 @@ jobs:
      - name: Setup a databricks workflows
        run: |
           dbx deploy \
-            --deployment-file=deployment/deploy-job.yaml \
+            --deployment-file=deployment/deploy-job-dab.yaml \
             --environment=prod \
             --job=cicd_jobs \
             --no-rebuild
