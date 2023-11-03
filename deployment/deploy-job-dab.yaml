@@ -16,7 +16,7 @@ resources:
           - task_key: "setup-tables"
             job_cluster_key: "cluster-setup"           
             notebook_task:
-              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/setup/initiate_setup"      
+              notebook_path: "/Repos/mmhleung@hotmail.com/cicd_with_databricks/src/main/python/setup/initiate_setup"      
               base_parameters:
                 num_rows: "10000"
                 env: ""
@@ -25,7 +25,7 @@ resources:
             depends_on:
               - task_key: "setup-tables"          
             notebook_task:
-              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
+              notebook_path: "/Repos/mmhleung@hotmail.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
               base_parameters:
                 source_dataset: "customers"
                 num_rows: "10000"
@@ -35,7 +35,7 @@ resources:
             depends_on:
               - task_key: "setup-tables"
             notebook_task:
-              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
+              notebook_path: "/Repos/mmhleung@hotmail.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
               base_parameters:
                 source_dataset: "orders"
                 num_rows: "10000"
@@ -45,7 +45,7 @@ resources:
             depends_on:
               - task_key: "setup-tables"
             notebook_task:
-              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
+              notebook_path: "/Repos/mmhleung@hotmail.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
               base_parameters:
                 source_dataset: "products"
                 num_rows: "10000"
@@ -55,7 +55,7 @@ resources:
             depends_on:
               - task_key: "setup-tables" 
             notebook_task:
-              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
+              notebook_path: "/Repos/mmhleung@hotmail.com/cicd_with_databricks/src/main/python/bronze/load_bronze_tables"
               base_parameters:
                 source_dataset: "sales"
                 num_rows: "10000"
@@ -67,7 +67,7 @@ resources:
               - task_key: "bronze-sales"
               - task_key: "bronze-orders"
             notebook_task:
-              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/silver/call_standardise_retail_dataset"
+              notebook_path: "/Repos/mmhleung@hotmail.com/cicd_with_databricks/src/main/python/silver/call_standardise_retail_dataset"
               base_parameters:
                 env: ""
           - task_key: "scd2-silver-customers"
@@ -75,7 +75,7 @@ resources:
             depends_on:
               - task_key: "bronze-customers"
             notebook_task:
-              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/silver/call_transform_to_scd2"
+              notebook_path: "/Repos/mmhleung@hotmail.com/cicd_with_databricks/src/main/python/silver/call_transform_to_scd2"
               base_parameters:
                 env: ""
           - task_key: "aggregation-gold"
@@ -84,7 +84,7 @@ resources:
               - task_key: "standardize-silver"
               - task_key: "scd2-silver-customers"
             notebook_task:
-              notebook_path: "/Repos/shivam.panicker@databricks.com/cicd_with_databricks/src/main/python/gold/gold_layer_etl_main"
+              notebook_path: "/Repos/mmhleung@hotmail.com/cicd_with_databricks/src/main/python/gold/gold_layer_etl_main"
               base_parameters:
                 env: ""
 targets:

@@ -39,7 +39,7 @@ def test_load_data_to_bronze():
     load_data_to_bronze(source_dataset, target_path, env)
 
     # Check that the output path contains the expected number of files
-    expected_num_files = 2
+    expected_num_files = 2 # 
     num_files = len(dbutils.fs.ls(target_path+"bronze_"+source_dataset))
     assert num_files == expected_num_files, f"Expected {expected_num_files} files, but found {num_files} files."
 
