@@ -48,16 +48,3 @@ class GoldAggregations:
       GROUP BY year, month
   """
         )
-
-     # Query 6: Average sales amount by month
-    def avg_sales_by_mon(spark, sales):
-        return spark.sql(
-            f"""
-      SELECT
-          YEAR(sale_date) as year,
-          MONTH(sale_date) as month,
-          AVG(sale_amount) as avg_sales
-      FROM {sales}
-      GROUP BY year, month
-  """
-        )

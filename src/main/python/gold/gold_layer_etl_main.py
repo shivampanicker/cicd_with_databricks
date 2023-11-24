@@ -35,7 +35,6 @@ query2 = GoldAggregations.total_sales_amount_in_usd(spark, "sales")
 query3 = GoldAggregations.top_10_best_selling_products(spark, "sales", "products")
 query4 = GoldAggregations.num_customers_by_state(spark, "customers")
 query5 = GoldAggregations.avg_sales_by_month(spark, "sales")
-query6 = GoldAggregations.avg_sales_by_mon(spark, "sales")
 
 # COMMAND ----------
 
@@ -53,8 +52,5 @@ query4.write.format("delta").mode("overwrite").saveAsTable(
     f"{user}_gold_db.statewise_customers"
 )
 query5.write.format("delta").mode("overwrite").saveAsTable(
-    f"{user}_gold_db.monthly_sales"
-)
-query6.write.format("delta").mode("overwrite").saveAsTable(
     f"{user}_gold_db.monthly_sales"
 )
