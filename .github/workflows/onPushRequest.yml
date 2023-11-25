@@ -42,8 +42,7 @@ jobs:
          new-cluster-json: >
            {
              "num_workers": 1,
-             "spark_version": "13.2.x-cpu-ml-scala2.12",
-             "node_type_id": "Standard_DS3_v2"
+             
            }
            
   run-integration-tests:
@@ -68,6 +67,5 @@ jobs:
          new-cluster-json: >
            {
              "num_workers": 1,
-             "spark_version": "13.2.x-cpu-ml-scala2.12",
-             "node_type_id": "Standard_DS3_v2"
+             
            }
