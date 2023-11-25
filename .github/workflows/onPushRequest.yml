@@ -42,8 +42,7 @@ jobs:
          new-cluster-json: >
            {
              "num_workers": 1,
-             "spark_version": "11.3.x-scala2.12",
-             "node_type_id": "i3.xlarge"
+             
            }
            
   run-integration-tests:
@@ -68,6 +67,5 @@ jobs:
          new-cluster-json: >
            {
              "num_workers": 1,
-             "spark_version": "11.3.x-scala2.12",
-             "node_type_id": "i3.xlarge"
+             
            }
