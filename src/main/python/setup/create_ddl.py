@@ -13,7 +13,7 @@ user = username[: username.index("@")]
 
 spark.sql(
     f"""CREATE DATABASE IF NOT EXISTS {user}_bronze_db
-  LOCATION '/FileStore/{username}_bronze_db/'
+  --LOCATION '/FileStore/{username}_bronze_db/'
 """
 )
 
@@ -21,7 +21,7 @@ spark.sql(
 
 spark.sql(
     f"""CREATE DATABASE IF NOT EXISTS {user}_silver_db
-  LOCATION '/FileStore/{username}_silver_db/'
+  --LOCATION '/FileStore/{username}_silver_db/'
 """
 )
 
@@ -29,7 +29,7 @@ spark.sql(
 
 spark.sql(
     f"""CREATE DATABASE IF NOT EXISTS {user}_gold_db
-  LOCATION '/FileStore/{username}_gold_db/'
+  --LOCATION '/FileStore/{username}_gold_db/'
 """
 )
 
