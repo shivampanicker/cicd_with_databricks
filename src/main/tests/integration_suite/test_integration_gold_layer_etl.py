@@ -1,18 +1,18 @@
 # Databricks notebook source
+import os
+from pyspark.sql.functions import col
+from gold_layer_etl import GoldAggregations
+import sys
 username = dbutils.notebook.entry_point.getDbutils().notebook().getContext().userName().get()
 user = username[:username.index("@")].replace('.', '_')
 
 # COMMAND ----------
 
-import sys
-import os 
 
-sys.path.append(os.path.abspath(f"/Workspace/Repos/{username}/cicd_with_databricks/src/main/python/gold/"))
+sys.path.append(os.path.abspath(f"/Workspace/users/{username}/cicd_with_databricks/src/main/python/gold/"))
 
 # COMMAND ----------
 
-from gold_layer_etl import GoldAggregations
-from pyspark.sql.functions import col
 
 # COMMAND ----------
 
@@ -45,6 +45,6 @@ query5 = GoldAggregations.avg_sales_by_month(spark, "sales")
 
 assert query1.select("total_orders").collect()[0].total_orders == 1000
 assert query2.select("total_sales").collect()[0].total_sales > 0.0
-assert query3.columns == ["product_id","product_category","total_sales"]
+assert query3.columns == ["product_id", "product_category", "total_sales"]
 assert query4.select("total_customers").filter("state = 'Utah'").collect()[0].total_customers > 0.0
 assert query5.select("avg_sales").filter((col('year') == '2022') & (col('month') == '10')).collect()[0].avg_sales > 50.0
