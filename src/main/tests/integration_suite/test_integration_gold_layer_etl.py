@@ -9,7 +9,7 @@ user = username[:username.index("@")].replace('.', '_')
 # COMMAND ----------
 
 
-sys.path.append(os.path.abspath(f"/Workspace/users/{username}/cicd_with_databricks/src/main/python/gold/"))
+sys.path.append(os.path.abspath(f"/Workspace/Users/{username}/cicd_with_databricks/src/main/python/gold/"))
 
 # COMMAND ----------
 
