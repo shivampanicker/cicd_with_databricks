@@ -1,9 +1,9 @@
 # Databricks notebook source
-import pytest
-pip install pytest
+
+%pip install pytest
+
 
 # COMMAND ----------
-
 
 # COMMAND ----------
 
@@ -12,7 +12,6 @@ username = dbutils.notebook.entry_point.getDbutils(
 user = username[:username.index("@")].replace('.', '_')
 
 # COMMAND ----------
-
 source_dataset = 'customers'
 target_path = f'/FileStore/{username}_bronze_db_test/'
 abs_path = f'/Workspace/Users/{username}/cicd_with_databricks/src/main/tests/'
