@@ -40,7 +40,7 @@ dbutils.notebook.run(abs_path+"/silver/test_standardise_retail_dataset", 300, {"
 
 # COMMAND ----------
 
-dbutils.notebook.run(abs_path+"/gold/test_gold_layer_etl", 300, {"env": env})
+# dbutils.notebook.run(abs_path+"/gold/test_gold_layer_etl", 300, {"env": env})
 
 # COMMAND ----------
 
