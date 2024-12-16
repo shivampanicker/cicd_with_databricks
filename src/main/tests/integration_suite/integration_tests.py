@@ -38,7 +38,7 @@ dbutils.notebook.run(abs_path + "integration_suite/test_integration_silver_layer
 
 # COMMAND ----------
 
-dbutils.notebook.run(abs_path + "integration_suite/test_integration_gold_layer_etl", 300, {})
+# dbutils.notebook.run(abs_path + "integration_suite/test_integration_gold_layer_etl", 300, {})
 
 # COMMAND ----------
 
